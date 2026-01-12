@@ -97,9 +97,14 @@ Github - https://github.com/waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B
 ## TODO
 - General
   - [ ] Code cleanup
-- [x] Fix backlight timing
+  - [ ] Fix backlight timing
 - Theme/styles
-- Add media player widget
+- Media player widget
+  - [-] Album Art
+  - [x] Power on
+  - [ ] Previous
+  - [ ] Skip
+  - [ ] Play/pause
 - Add battery charge widget
   - Battery voltage: GPIO20
     - ```YAML
