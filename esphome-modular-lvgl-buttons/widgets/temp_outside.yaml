@@ -1,0 +1,96 @@
+.forcast_styles:
+    - &current_label_base
+      # text_font: nunito_26
+      bg_opa: TRANSP
+      text_font: nunito_16
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+      text_color: white
+
+    - &current_image_base
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+
+
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+            id: !extend current_widget
+            widgets:
+              ######  Outdoor Temp  ######
+              - container: #label:
+                  bg_opa: cover
+                  bg_color: slate_blue_gray
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  # grid_column_align: center
+                  # grid_row_align: center
+                  # pad_left: 0
+                  # pad_right: 0
+                  # pad_all: 5
+                  shadow_width: 0
+                  border_width: 4
+                  border_color: very_dark_gray
+                  radius: 10
+                  layout:
+                    type: grid
+                    grid_rows: [ fr(1), fr(1) ]
+                    grid_columns: [ content, fr(1) ]
+                  widgets:
+                    - label:
+                        grid_cell_row_pos: 0
+                        grid_cell_column_pos: 0
+                        grid_cell_x_align: start
+                        grid_cell_y_align: center
+                        shadow_width: 0
+                        # border_width: 4
+                        # border_color: black
+                        text_font: $icon_font_4
+                        align: center
+                        id: outdoor_temp_icon
+                        text: $mdi_sun_thermometer
+                        text_color: dodgerblue
+                    - label:
+                        grid_cell_row_pos: 0
+                        grid_cell_column_pos: 1
+                        grid_cell_column_span: 1
+                        grid_cell_x_align: center
+                        grid_cell_y_align: center
+                        # shadow_width: 0
+                        # border_width: 4
+                        border_color: black
+                        text_font: nunito_18
+                        align: center
+                        id: outdoor_temp_label
+                        text: "Outdoor"
+                        text_color: white
+                    - label:
+                        grid_cell_row_pos: 1
+                        grid_cell_column_pos: 0
+                        grid_cell_column_span: 2
+                        grid_cell_x_align: center
+                        grid_cell_y_align: center
+                        text_font: nunito_36
+                        pad_bottom: 5
+                        align: center
+                        id: outdoor_temp_text
+                        text: "100°"
+                        text_color: white
+              # - container: #label:
+                  #bg_color: header_bg
+                  # bg_opa: TRANSP
+                  # grid_cell_row_pos: 1
+                  # grid_cell_column_pos: 0
+                  # grid_cell_x_align: stretch
+                  # grid_cell_y_align: stretch
+                  # border_width: 0
+                  # border_color: very_dark_gray
+                  # widgets:
+                    
+

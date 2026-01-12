@@ -1,0 +1,70 @@
+---
+# Local relay button
+# vars:
+#    uid:
+#    row:
+#    column:
+#    row_span:
+#    column_span:
+#    text: 
+#    icon:
+#    entity_id:
+
+# This section add a button to LVGL page main_page
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+              id: ${uid}
+              grid_cell_row_pos: ${row}
+              grid_cell_column_pos: ${column}
+              grid_cell_row_span: ${row_span | default(1)}
+              grid_cell_column_span: ${column_span | default(1)}
+              grid_cell_x_align: stretch
+              grid_cell_y_align: stretch
+              # outline_width: 1
+              # outline_color: red
+              widgets:
+              - button:
+                  id: button_${uid}
+                  widgets:
+                    - label:
+                        text_font: $icon_font
+                        align: top_left
+                        id: icon_${uid}
+                        text: ${icon}
+                    - label:
+                        align: bottom_left
+                        id: label_${uid}
+                        text: ${text}
+                  on_short_click:
+                      light.toggle: local_light_${uid}
+
+light:
+  - id: local_light_${uid}
+    name: ${ha_name}
+    platform: binary
+    output: $entity_id
+    on_turn_on:
+      then:
+        - lvgl.widget.update:
+            id: button_${uid}
+            bg_color: $button_on_color
+        - lvgl.widget.update:
+            id: icon_${uid}
+            text_color: $icon_on_color
+        - lvgl.widget.update:
+            id: label_${uid}
+            text_color: $label_on_color
+    on_turn_off:
+      then:
+        - lvgl.widget.update:
+            id: button_${uid}
+            bg_color: $button_off_color
+        - lvgl.widget.update:
+            id: icon_${uid}
+            text_color: $icon_off_color
+        - lvgl.widget.update:
+            id: label_${uid}
+            text_color: $label_off_color

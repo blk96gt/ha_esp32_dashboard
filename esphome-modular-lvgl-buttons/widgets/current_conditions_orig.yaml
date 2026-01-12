@@ -1,0 +1,185 @@
+.forcast_styles:
+    - &current_label_base
+      # text_font: nunito_26
+      bg_opa: TRANSP
+      text_font: nunito_16
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+      text_color: white
+
+    - &current_image_base
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+
+
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+            id: ${uid}
+            grid_cell_row_pos: ${row}
+            grid_cell_column_pos: ${column}
+            grid_cell_row_span: ${row_span | default(1)}
+            grid_cell_column_span: ${column_span | default(1)}
+            grid_cell_x_align: stretch
+            grid_cell_y_align: stretch
+            # grid_cell_x_align: stretch
+            # grid_cell_y_align: stretch
+            # grid_cell_row_pos: 1
+            # grid_cell_column_pos: 4
+            # grid_cell_row_span: 2
+            # grid_cell_column_span: 3
+            bg_color: slate_blue_gray
+            bg_opa: COVER
+            border_width: 2
+            border_color: very_dark_gray
+            radius: 10
+            layout:
+                type: grid
+                grid_rows: [ fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1) ]
+                grid_columns: [ fr(1), fr(1) ]
+            ##########  Current Conditions  ##########
+            widgets:
+              ######  Outdoor Temp  ######
+              - container: #label:
+                  #bg_color: header_bg
+                  bg_opa: TRANSP
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  # border_width: 2
+                  # border_color: very_dark_gray
+                  # align: CENTER
+                  # radius: 40
+                  # pad_all: 8
+                  pad_left: 15
+                  pad_right: 15
+                  # outline_p
+                  shadow_width: 0 # Bug? - This is required even though the default is supposed to be 0.
+                  # text: ""
+                  widgets:
+                    - label:
+                        text_font: $icon_font_4
+                        align: left_mid
+                        id: outdoor_temp_icon
+                        text: $mdi_sun_thermometer
+                        text_color: dodgerblue
+                    - label:
+                        text_font: nunito_18
+                        align: right_mid
+                        id: outdoor_temp_label
+                        text: "Outdoor"
+                        text_color: white
+              - container: #label:
+                  #bg_color: header_bg
+                  bg_opa: TRANSP
+                  grid_cell_row_pos: 1
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  border_width: 0
+                  border_color: very_dark_gray
+                  widgets:
+                    - label:
+                        text_font: nunito_36
+                        align: center
+                        id: outdoor_temp_text
+                        text: "100°"
+                        text_color: white
+              ######  Outdoor Humidity  ######
+              - container: #label:
+                  bg_opa: TRANSP
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 1
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  border_width: 0
+                  border_color: very_dark_gray
+                  pad_left: 5
+                  pad_right: 25
+                  # outline_p
+                  shadow_width: 0 # Bug? - This is required even though the default is supposed to be 0.
+                  # text: ""
+                  widgets:
+                    - label:
+                        text_font: $icon_font_4
+                        align: left_mid
+                        id: outdoor_humidity_icon
+                        text: $mdi_water_percent
+                        text_color: dodgerblue
+                    - label:
+                        text_font: nunito_18
+                        align: right_mid
+                        id: outdoor_humidity_label
+                        text: "Humidity"
+                        text_color: white
+              - container: #label:
+                  bg_opa: TRANSP
+                  grid_cell_row_pos: 1
+                  grid_cell_column_pos: 1
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  border_width: 0
+                  border_color: very_dark_gray
+                  shadow_width: 0 # Bug? - This is required even though the default is supposed to be 0.
+                  widgets:
+                    - label:
+                        text_font: nunito_36
+                        align: center
+                        id: outdoor_humidity_text
+                        text: "50%"
+                        text_color: white
+
+              ######  Rain Rate  ######
+              - container: #label:
+                  bg_opa: TRANSP
+                  grid_cell_row_pos: 2
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  border_width: 0
+                  border_color: very_dark_gray
+                  pad_left: 5
+                  pad_right: 10
+                  shadow_width: 0 # Bug? - This is required even though the default is supposed to be 0.
+                  widgets:
+                    - label:
+                        text_font: $icon_font_4
+                        align: left_mid
+                        id: rain_rate_icon
+                        text: $mdi_weather_pouring
+                        text_color: dodgerblue
+                    - label:
+                        text_font: nunito_18
+                        align: right_mid
+                        id: rain_rate_label
+                        text: "Rain Rate"
+                        text_color: white
+              - container: #label:
+                  bg_opa: TRANSP
+                  grid_cell_row_pos: 3
+                  grid_cell_column_pos: 0
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  border_width: 0
+                  border_color: very_dark_gray
+                  shadow_width: 0 # Bug? - This is required even though the default is supposed to be 0.
+                  widgets:
+                    - label:
+                        text_font: nunito_30
+                        align: center
+                        id: rain_rate_text
+                        text: "1.00in/hr"
+                        text_color: white
+                ########  HOUR 0  ########
+                # - label:
+                #     id: some_weather
+                #     # <<: *current_label_base
+                #     text: $mdi_sun_thermometer
+                #     grid_cell_row_pos: 0
+                #     grid_cell_column_pos: 0
+                #     grid_cell_column_span: 1

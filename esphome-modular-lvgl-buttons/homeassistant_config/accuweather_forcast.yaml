@@ -1,0 +1,188 @@
+---
+# Weather forcast from Home Assistant Accuweather plugin
+# Include this in your configuration.yaml
+#
+template:
+  - trigger:
+      - platform: time_pattern
+        hours: 7
+        minutes: 36
+
+    sensor:
+      - name: "time1"
+        state: >
+          {{ as_timestamp(state_attr("sun.sun", "next_dawn")) }}
+      - name: "time2"
+        state: >
+          {{ as_timestamp(state_attr("sun.sun", "next_dusk")) }}
+
+
+  - trigger:
+      - platform: time_pattern
+        hours: "/1"
+        #minutes: "/3"
+      - platform: homeassistant
+        event: start
+
+    action:
+      - action: weather.get_forecasts
+        data:
+          type: daily
+        target:
+          entity_id: weather.forecast_home
+        response_variable: hourly
+      - action: weather.get_forecasts
+        data:
+          type: hourly
+        target:
+          entity_id: weather.forecast_home
+        response_variable: hourly_forecast
+    sensor:
+      - name: Weather Forecast
+        unique_id: weather_forecast
+        state: "OK"
+        attributes:
+          hourly_is_day_0: >
+            {% if states('sensor.time1') | float(5) > as_timestamp(hourly_forecast["weather.forecast_home"].forecast[0].datetime) and as_timestamp(hourly_forecast["weather.forecast_home"].forecast[0].datetime) < states('sensor.time2') | float(5) %}
+              1
+            {% else %}
+              0
+            {% endif %}
+          sun_0: >
+            {{ as_timestamp(state_attr("sun.sun", "next_rising")) }}
+          hourly_0: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[0].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_timestamp_0: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[0].datetime) }}
+          hourly_condition_0: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[0].condition }}
+          hourly_temp_0: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[0].temperature }}
+
+          hourly_is_day_1: >
+            {% if states('sensor.time1') | float(5) > as_timestamp(hourly_forecast["weather.forecast_home"].forecast[1].datetime) and as_timestamp(hourly_forecast["weather.forecast_home"].forecast[1].datetime) < states('sensor.time2') | float(5) %}
+              1
+            {% else %}
+              0
+            {% endif %}
+          hourly_1: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[1].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_1: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[1].condition }}
+          hourly_temp_1: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[1].temperature }}
+
+          hourly_is_day_2: >
+            {% if states('sensor.time1') | float(5) > as_timestamp(hourly_forecast["weather.forecast_home"].forecast[2].datetime) and as_timestamp(hourly_forecast["weather.forecast_home"].forecast[2].datetime) < states('sensor.time2') | float(5) %}
+              1
+            {% else %}
+              0
+            {% endif %}
+          hourly_2: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[2].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_2: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[2].condition }}
+          hourly_temp_2: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[2].temperature }}
+
+          hourly_is_day_3: >
+            {% if states('sensor.time1') | float(5) > as_timestamp(hourly_forecast["weather.forecast_home"].forecast[3].datetime) and as_timestamp(hourly_forecast["weather.forecast_home"].forecast[3].datetime) < states('sensor.time2') | float(5) %}
+              1
+            {% else %}
+              0
+            {% endif %}
+          hourly_3: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[3].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_3: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[3].condition }}
+          hourly_temp_3: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[3].temperature }}
+
+          hourly_is_day_4: >
+            {% if states('sensor.time1') | float(5) > as_timestamp(hourly_forecast["weather.forecast_home"].forecast[4].datetime) and as_timestamp(hourly_forecast["weather.forecast_home"].forecast[4].datetime) < states('sensor.time2') | float(5) %}
+              1
+            {% else %}
+              0
+            {% endif %}
+          hourly_4: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[4].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_4: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[4].condition }}
+          hourly_temp_4: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[4].temperature }}
+
+          hourly_is_day_5: >
+            {% if states('sensor.time1') | float(5) > as_timestamp(hourly_forecast["weather.forecast_home"].forecast[5].datetime) and as_timestamp(hourly_forecast["weather.forecast_home"].forecast[5].datetime) < states('sensor.time2') | float(5) %}
+              1
+            {% else %}
+              0
+            {% endif %}
+          hourly_5: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[5].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_5: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[5].condition }}
+          hourly_temp_5: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[5].temperature }}
+
+          hourly_6: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[6].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_6: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[6].condition }}
+          hourly_temp_6: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[6].temperature }}
+
+          hourly_7: >
+            {{ as_timestamp(hourly_forecast["weather.forecast_home"].forecast[7].datetime) | timestamp_custom('%I:%M %p') }}
+          hourly_condition_7: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[7].condition }}
+          hourly_temp_7: >
+            {{ hourly_forecast["weather.forecast_home"].forecast[7].temperature }}
+
+          # hourly_8: >
+          #   {{ hourly_forecast["weather.forecast_home"].forecast[8] }}
+
+
+          condition_0: >
+            {{ hourly["weather.forecast_home"].forecast[0].condition }}
+          temperature_hi_0: >
+            {{ hourly["weather.forecast_home"].forecast[0].temperature }}
+          temperature_lo_0: >
+            {{ hourly["weather.forecast_home"].forecast[0].templow }}
+          day_0: >
+            {{ as_timestamp(hourly["weather.forecast_home"].forecast[0].datetime) | timestamp_custom('%a') }}
+
+          condition_1: >
+            {{ hourly["weather.forecast_home"].forecast[1].condition }}
+          temperature_hi_1: >
+            {{ hourly["weather.forecast_home"].forecast[1].temperature }}
+          temperature_lo_1: >
+            {{ hourly["weather.forecast_home"].forecast[1].templow }}
+          day_1: >
+            {{ as_timestamp(hourly["weather.forecast_home"].forecast[1].datetime) | timestamp_custom('%a') }}
+
+          condition_2: >
+            {{ hourly["weather.forecast_home"].forecast[2].condition }}
+          temperature_hi_2: >
+            {{ hourly["weather.forecast_home"].forecast[2].temperature }}
+          temperature_lo_2: >
+            {{ hourly["weather.forecast_home"].forecast[2].templow }}
+          day_2: >
+            {{ as_timestamp(hourly["weather.forecast_home"].forecast[2].datetime) | timestamp_custom('%a') }}
+
+          condition_3: >
+            {{ hourly["weather.forecast_home"].forecast[3].condition }}
+          temperature_hi_3: >
+            {{ hourly["weather.forecast_home"].forecast[3].temperature }}
+          temperature_lo_3: >
+            {{ hourly["weather.forecast_home"].forecast[3].templow }}
+          day_3: >
+            {{ as_timestamp(hourly["weather.forecast_home"].forecast[3].datetime) | timestamp_custom('%a') }}
+          
+          condition_4: >
+            {{ hourly["weather.forecast_home"].forecast[4].condition }}
+          temperature_hi_4: >
+            {{ hourly["weather.forecast_home"].forecast[4].temperature }}
+          temperature_lo_4: >
+            {{ hourly["weather.forecast_home"].forecast[4].templow }}
+          day_4: >
+            {{ as_timestamp(hourly["weather.forecast_home"].forecast[4].datetime) | timestamp_custom('%a') }}

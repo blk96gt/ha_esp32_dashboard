@@ -1,0 +1,106 @@
+.forcast_styles:
+    - &media_label_base
+      bg_opa: TRANSP
+      text_font: nunito_18
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+      text_color: white
+
+
+
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+            id: ${uid}
+            grid_cell_row_pos: ${row}
+            grid_cell_column_pos: ${column}
+            grid_cell_row_span: ${row_span | default(1)}
+            grid_cell_column_span: ${column_span | default(1)}
+            grid_cell_x_align: stretch
+            grid_cell_y_align: stretch
+            # grid_cell_x_align: stretch
+            # grid_cell_y_align: stretch
+            # grid_cell_row_pos: 3
+            # grid_cell_column_pos: 0
+            # grid_cell_row_span: 2
+            # grid_cell_column_span: 4
+            bg_color: slate_blue_gray
+            bg_opa: TRANSP
+            border_width: 2
+            border_color: very_dark_gray
+            radius: 10
+            layout:
+              type: grid
+              grid_rows: [ fr(1) ]
+              grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1) ]
+            widgets:
+              - button:
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 2
+                  grid_cell_x_align: start
+                  grid_cell_y_align: center
+                  shadow_width: 0
+                  border_width: 0
+                  border_color: black
+                  text_font: $icon_font_2
+                  bg_opa: TRANSP
+                  align: center
+                  id: power_icon
+                  text: ${mdi_power}
+                  text_color: dodgerblue
+                  on_short_click:
+                      - homeassistant.action:
+                          action: homeassistant.toggle
+                          data:
+                            entity_id: media_player.media_toggle
+              - button:
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 2
+                  grid_cell_x_align: start
+                  grid_cell_y_align: center
+                  shadow_width: 0
+                  border_width: 0
+                  border_color: black
+                  text_font: $icon_font_2
+                  bg_opa: TRANSP
+                  align: center
+                  id: prev_icon
+                  text: ${mdi_skip_previous}
+                  text_color: dodgerblue
+              - button:
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 3
+                  grid_cell_x_align: start
+                  grid_cell_y_align: center
+                  shadow_width: 0
+                  border_width: 0
+                  border_color: black
+                  text_font: $icon_font_2
+                  bg_opa: TRANSP
+                  align: center
+                  id: play_icon
+                  text: ${mdi_play}
+                  text_color: dodgerblue
+              - button:
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 4
+                  grid_cell_x_align: start
+                  grid_cell_y_align: center
+                  shadow_width: 0
+                  border_width: 0
+                  border_color: black
+                  text_font: $icon_font_2
+                  bg_opa: TRANSP
+                  align: center
+                  id: skip_icon
+                  text: ${mdi_skip_next}
+                  text_color: dodgerblue
+
+
+
+
+              

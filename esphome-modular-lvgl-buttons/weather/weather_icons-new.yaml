@@ -1,0 +1,70 @@
+---
+# Weather icons
+# https://github.com/manifestinteractive/weather-underground-icons.git
+
+image:
+  rgb:
+    alpha_channel: 
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/nt_clear.svg
+        id: clear_night_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/cloudy.svg
+        id: cloudy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/lightning-rainy.svg
+        id: exceptional_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/fog.svg
+        id: fog_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/hail.svg
+        id: hail_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/lightning.svg
+        id: lightning_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/lightning-rainy.svg
+        id: lightning_rainy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/partlycloudy.svg
+        id: partlycloudy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/pouring.svg
+        id: pouring_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/rainy.svg
+        id: rainy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/snow.svg
+        id: snowy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/snowy-rainy.svg
+        id: snowy_rainy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/sunny.svg
+        id: sunny_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/windy.svg
+        id: windy_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/unknown.svg
+        id: unknown_${size}
+        resize: ${size}x${size}
+
+      - file: esphome-modular-lvgl-buttons/weather/assets/images/circle-slash.svg
+        id: unavailable_${size}
+        resize: ${size}x${size}

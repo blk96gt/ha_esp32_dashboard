@@ -1,0 +1,110 @@
+.forcast_styles:
+    - &current_label_base
+      # text_font: nunito_26
+      bg_opa: TRANSP
+      text_font: nunito_16
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+      text_color: white
+
+    - &current_image_base
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+
+
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+            id: !extend current_widget
+            widgets:
+              ######  Outdoor Temp  ######
+              - container: #label:
+                  id: ${uid}
+                  grid_cell_row_pos: ${row}
+                  grid_cell_column_pos: ${column}
+                  grid_cell_row_span: ${row_span | default(1)}
+                  grid_cell_column_span: ${column_span | default(1)}
+                  # grid_cell_row_pos: 0
+                  # grid_cell_column_pos: 0
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: stretch
+                  bg_opa: cover
+                  bg_color: slate_blue_gray
+                  shadow_width: 0
+                  border_width: ${border_wd | default(2)}
+                  border_color: black
+                  pad_all: 3
+                  radius: 5
+                  layout:
+                    type: grid
+                    grid_rows: [ fr(1), fr(1) ]
+                    grid_columns: [ content, fr(1) ]
+                  widgets:
+                    - label:
+                        grid_cell_row_pos: 0
+                        grid_cell_column_pos: 0
+                        grid_cell_x_align: start
+                        grid_cell_y_align: center
+                        shadow_width: 0
+                        # border_width: 4
+                        # border_color: black
+                        text_font: $icon_font_4
+                        align: center
+                        id: ${uid}_icon
+                        text: ${icon} # $mdi_sun_thermometer
+                        text_color: dodgerblue
+                    - label:
+                        grid_cell_row_pos: 0
+                        grid_cell_column_pos: 1
+                        grid_cell_column_span: 1
+                        grid_cell_x_align: center
+                        grid_cell_y_align: center
+                        # shadow_width: 0
+                        # border_width: 4
+                        border_color: black
+                        text_font: ${label_font}
+                        align: center
+                        id: ${uid}_label
+                        text: ${label_text} # "Outdoor"
+                        text_color: white
+                    - label:
+                        grid_cell_row_pos: 1
+                        grid_cell_column_pos: 0
+                        grid_cell_column_span: 2
+                        grid_cell_x_align: center
+                        grid_cell_y_align: center
+                        text_font: ${text_font}
+                        pad_bottom: 5
+                        align: center
+                        id: ${uid}_text
+                        text: "100°"
+                        text_color: white
+
+
+              # - container: #label:
+                  #bg_color: header_bg
+                  # bg_opa: TRANSP
+                  # grid_cell_row_pos: 1
+                  # grid_cell_column_pos: 0
+                  # grid_cell_x_align: stretch
+                  # grid_cell_y_align: stretch
+                  # border_width: 0
+                  # border_color: very_dark_gray
+                  # widgets:
+                    
+text_sensor:
+  - platform: homeassistant
+    entity_id: ${entity_id}
+    id: ${uid}_sensor
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: ${uid}_text
+              text:
+                format: ${text_format}
+                args: [ 'id(${uid}_sensor).state.c_str()' ]

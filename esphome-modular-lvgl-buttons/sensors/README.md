@@ -1,0 +1,1 @@
+Add info about ADC sensors and battery voltage

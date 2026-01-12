@@ -1,0 +1,326 @@
+---
+# Weather forcast from Home Assistant Accuweather plugin
+
+text_sensor:
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_0
+    id: hourly_0
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_0
+              text:
+                format: "%s"
+                args: [ 'id(hourly_0).state.c_str()' ]
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_condition_0
+    id: hourly_condition_0
+    on_value:
+        then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_hourly_condition_icon_0, input_id: hourly_condition_0, is_hourly: 1 }}
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_temp_0
+    id: hourly_temp_0
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_temp_0
+              text:
+                format: "%s°"
+                args: [ 'id(hourly_temp_0).state.c_str()' ]
+
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_1
+    id: hourly_1
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_1
+              text:
+                format: "%s"
+                args: [ 'id(hourly_1).state.c_str()' ]
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_condition_1
+    id: hourly_condition_1
+    on_value:
+        then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_hourly_condition_icon_1, input_id: hourly_condition_1, is_hourly: 1 }}
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_temp_1
+    id: hourly_temp_1
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_temp_1
+              text:
+                format: "%s°"
+                args: [ 'id(hourly_temp_1).state.c_str()' ]
+
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_2
+    id: hourly_2
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_2
+              text:
+                format: "%s"
+                args: [ 'id(hourly_2).state.c_str()' ]
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_condition_2
+    id: hourly_condition_2
+    on_value:
+        then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_hourly_condition_icon_2, input_id: hourly_condition_2, is_hourly: 1 }}
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_temp_2
+    id: hourly_temp_2
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_temp_2
+              text:
+                format: "%s°"
+                args: [ 'id(hourly_temp_2).state.c_str()' ]
+
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_3
+    id: hourly_3
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_3
+              text:
+                format: "%s"
+                args: [ 'id(hourly_3).state.c_str()' ]
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_condition_3
+    id: hourly_condition_3
+    on_value:
+        then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_hourly_condition_icon_3, input_id: hourly_condition_3, is_hourly: 1 }}
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_temp_3
+    id: hourly_temp_3
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_temp_3
+              text:
+                format: "%s°"
+                args: [ 'id(hourly_temp_3).state.c_str()' ]
+
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_4
+    id: hourly_4
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_4
+              text:
+                format: "%s"
+                args: [ 'id(hourly_4).state.c_str()' ]
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_condition_4
+    id: hourly_condition_4
+    on_value:
+        then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_hourly_condition_icon_4, input_id: hourly_condition_4, is_hourly: 1 }}
+
+  - platform: homeassistant
+    entity_id: sensor.weather_forecast
+    attribute: hourly_temp_4
+    id: hourly_temp_4
+    on_value:
+        then:
+          # Update weather_condition
+          - lvgl.label.update:
+              id: forecast_hourly_temp_4
+              text:
+                format: "%s°"
+                args: [ 'id(hourly_temp_4).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_lo_0
+  #   id: temperature_lo_0
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_lo_0
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_lo_0).state.c_str()' ]
+
+
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: condition_1
+  #   id: condition_1
+  #   on_value:
+  #       then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_condition_icon_1, input_id: condition_1 }}
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_hi_1
+  #   id: temperature_hi_1
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_hi_1
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_hi_1).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_lo_1
+  #   id: temperature_lo_1
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_lo_1
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_lo_1).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: day_1
+  #   id: day_1
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_day_1
+  #             text:
+  #               format: "%s"
+  #               args: [ 'id(day_1).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: condition_2
+  #   id: condition_2
+  #   on_value:
+  #       then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_condition_icon_2, input_id: condition_2 }}
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_hi_2
+  #   id: temperature_hi_2
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_hi_2
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_hi_2).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_lo_2
+  #   id: temperature_lo_2
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_lo_2
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_lo_2).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: day_2
+  #   id: day_2
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_day_2
+  #             text:
+  #               format: "%s"
+  #               args: [ 'id(day_2).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: condition_3
+  #   id: condition_3
+  #   on_value:
+  #       then:  !include { file: weather_icons_update.yaml, vars: { size: "${size}", id: forecast_condition_icon_3, input_id: condition_3 }}
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_hi_3
+  #   id: temperature_hi_3
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_hi_3
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_hi_3).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: temperature_lo_3
+  #   id: temperature_lo_3
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_temperature_lo_3
+  #             text:
+  #               format: "%s°"
+  #               args: [ 'id(temperature_lo_3).state.c_str()' ]
+
+  # - platform: homeassistant
+  #   entity_id: sensor.weather_forecast
+  #   attribute: day_3
+  #   id: day_3
+  #   on_value:
+  #       then:
+  #         # Update weather_condition
+  #         - lvgl.label.update:
+  #             id: forecast_day_3
+  #             text:
+  #               format: "%s"
+  #               args: [ 'id(day_3).state.c_str()' ]

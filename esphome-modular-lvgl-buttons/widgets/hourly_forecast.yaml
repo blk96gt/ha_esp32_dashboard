@@ -1,0 +1,169 @@
+.forcast_styles:
+    - &forecast_label_base_hourly
+      # text_font: nunito_26
+      bg_opa: TRANSP
+      text_font: nunito_16
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+      text_color: white
+
+    - &forecast_image_base_hourly
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+
+    - &forecast_temp_base_hourly
+      # text_font: nunito_26
+      bg_opa: TRANSP
+      text_font: nunito_18
+      border_width: 0
+      grid_cell_x_align: center
+      grid_cell_y_align: center
+      text_color: white
+
+
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+            id: ${uid}
+            grid_cell_row_pos: ${row}
+            grid_cell_column_pos: ${column}
+            grid_cell_row_span: ${row_span | default(1)}
+            grid_cell_column_span: ${column_span | default(1)}
+            grid_cell_x_align: stretch
+            grid_cell_y_align: stretch
+            # grid_cell_x_align: stretch
+            # grid_cell_y_align: stretch
+            # grid_cell_row_pos: 1
+            # grid_cell_column_pos: 0
+            # grid_cell_row_span: 2
+            # grid_cell_column_span: 4
+            bg_color: slate_blue_gray
+            bg_opa: COVER
+            border_width: 2
+            border_color: very_dark_gray
+            radius: 10
+            layout:
+                type: grid
+                grid_rows: [ fr(1), content, fr(1) ]
+                grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1) ]
+            ##########  HOURLY FORECAST ##########
+            widgets:
+                ########  HOUR 0  ########
+                - label:
+                    id: forecast_hourly_0
+                    <<: *forecast_label_base_hourly
+                    text: "12:00 AM"
+                    grid_cell_row_pos: 0
+                    grid_cell_column_pos: 0
+                    grid_cell_column_span: 1
+                - image:
+                    id: forecast_hourly_condition_icon_0
+                    <<: *forecast_image_base_hourly
+                    src: unknown_100
+                    grid_cell_row_pos: 1
+                    grid_cell_column_pos: 0
+                    grid_cell_column_span: 1
+                    text_color: black
+                - label:
+                    id: forecast_hourly_temp_0
+                    <<: *forecast_temp_base_hourly
+                    text: "100*"
+                    grid_cell_row_pos: 2
+                    grid_cell_column_pos: 0
+                    grid_cell_column_span: 1
+
+                ######## HOUR 1 ########
+                - label:
+                    id: forecast_hourly_1
+                    <<: *forecast_label_base_hourly
+                    text: "12:00 AM"
+                    grid_cell_row_pos: 0
+                    grid_cell_column_pos: 1
+                    grid_cell_column_span: 1
+                - image:
+                    id: forecast_hourly_condition_icon_1
+                    <<: *forecast_image_base_hourly
+                    src: unknown_100
+                    grid_cell_row_pos: 1
+                    grid_cell_column_pos: 1
+                    grid_cell_column_span: 1
+                - label:
+                    id: forecast_hourly_temp_1
+                    <<: *forecast_temp_base_hourly
+                    text: "100*"
+                    grid_cell_row_pos: 2
+                    grid_cell_column_pos: 1
+                    grid_cell_column_span: 1
+                
+                ######## HOUR 2 ########
+                - label:
+                    id: forecast_hourly_2
+                    <<: *forecast_label_base_hourly
+                    text: "12:00 AM"
+                    grid_cell_row_pos: 0
+                    grid_cell_column_pos: 2
+                    grid_cell_column_span: 1
+                - image:
+                    id: forecast_hourly_condition_icon_2
+                    <<: *forecast_image_base_hourly
+                    src: unknown_100
+                    grid_cell_row_pos: 1
+                    grid_cell_column_pos: 2
+                    grid_cell_column_span: 1
+                - label:
+                    id: forecast_hourly_temp_2
+                    <<: *forecast_temp_base_hourly
+                    text: "100*"
+                    grid_cell_row_pos: 2
+                    grid_cell_column_pos: 2
+                    grid_cell_column_span: 1
+
+                ######## HOUR 3 ########
+                - label:
+                    id: forecast_hourly_3
+                    <<: *forecast_label_base_hourly
+                    text: "12:00 AM"
+                    grid_cell_row_pos: 0
+                    grid_cell_column_pos: 3
+                    grid_cell_column_span: 1
+                - image:
+                    id: forecast_hourly_condition_icon_3
+                    <<: *forecast_image_base_hourly
+                    src: unknown_100
+                    grid_cell_row_pos: 1
+                    grid_cell_column_pos: 3
+                    grid_cell_column_span: 1
+                - label:
+                    id: forecast_hourly_temp_3
+                    <<: *forecast_temp_base_hourly
+                    text: "100*"
+                    grid_cell_row_pos: 2
+                    grid_cell_column_pos: 3
+                    grid_cell_column_span: 1
+
+                ######## HOUR 4 ########
+                - label:
+                    id: forecast_hourly_4
+                    <<: *forecast_label_base_hourly
+                    text: "12:00 AM"
+                    grid_cell_row_pos: 0
+                    grid_cell_column_pos: 4
+                    grid_cell_column_span: 1
+                - image:
+                    id: forecast_hourly_condition_icon_4
+                    <<: *forecast_image_base_hourly
+                    src: unknown_100
+                    grid_cell_row_pos: 1
+                    grid_cell_column_pos: 4
+                    grid_cell_column_span: 1
+                - label:
+                    id: forecast_hourly_temp_4
+                    <<: *forecast_temp_base_hourly
+                    text: "100*"
+                    grid_cell_row_pos: 2
+                    grid_cell_column_pos: 4
+                    grid_cell_column_span: 1

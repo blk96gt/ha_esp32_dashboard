@@ -1,0 +1,675 @@
+# Substitution variables used through the codebase
+substitutions:
+  icon_font: mdi_icons_40
+  icon_font_2: mdi_icons_60
+  icon_font_3: mdi_icons_20
+  icon_font_4: mdi_icons_30
+  text_font: nunito_24
+  text_color: white
+  bg_color: black
+  # button_on_color: "ep_green"
+  button_on_color: "slate_blue_gray"
+  button_off_color: "very_dark_gray"
+  icon_on_color: "yellow"
+  icon_off_color: "gray"
+  label_on_color: "white"
+  label_off_color: "gray"
+  button_text_color: "white"
+  touchscreen_idle_timeout: "30s"
+  touchscreen_daytime_brightness: "100%"
+  touchscreen_nighttime_brightness: "50%"
+  button_height_single: '109px'
+  button_height_double: '228px'
+  button_width: '150px'
+  # Boot screen configuration
+  boot_screen_delay: 60s
+
+  # LCD backlight modes - Code in backlight.yaml
+  # Day mode is set to Sunrise
+  # Evening mode is set to sunset
+  # Set Night mode  at Mightnight here
+  screen_night_hour: '1'
+  screen_night_minute: '0'
+
+  # Screen Size
+  screen_height: 600
+  screen_width: 1024
+
+esphome:
+  name: "waveshare-esp32-p4-touch-lcd-7b"
+  # name: "waveshare-sdl"
+  friendly_name: "waveshare-esp32-p4-wifi6-touch-lcd-7b"
+  comment: "Waveshare esp32-p4-wifi6-touch-lcd-7b 1024px X 600px Smart Screen"
+  on_boot:
+    - priority: 400
+      then:
+        - script.execute: update_loading_page
+
+logger:
+  level: debug
+  
+#### UNCOMMENT BEFORE COMPILING FOR INSTALL ####
+  logs:
+    lvgl: info
+  hardware_uart: UART0
+  
+# Some screens need little_endian byte order and some need big_endian
+# this sets the byte order for all the images loaded in this file and the packages as well
+image:
+  defaults:
+    byte_order: little_endian      
+
+script:
+  - id: time_update
+    then:
+      - lvgl.label.update:
+          id: combined_date
+          text: !lambda |- # Month Day
+            auto time = id(system_time).now();
+            int day = time.day_of_month;
+            char strftime_buf[64];
+            snprintf(strftime_buf, sizeof(strftime_buf), "%s %d", time.strftime("%B").c_str(), day);
+            return {id(system_time).now().strftime("%A") + ", " + strftime_buf};
+      - lvgl.label.update:
+          id: time_label
+          text: !lambda 'return id(system_time).now().strftime("%l:%M %p");' # The format %I:%M %p will display the time in a 12-hour format with "am" or "pm" included
+          
+packages:
+  # Generic configuration for ESP32 screens
+  # SDL has no Wi-Fi  # Enable OTA updates with a status screen
+
+  ###### UNCOMMENT BEFORE INSTALL TO DEVICE ######
+  wifi: !include esphome-modular-lvgl-buttons/common/wifi.yaml
+  ota_screen: !include esphome-modular-lvgl-buttons/common/ota.yaml
+
+
+  # All the colors
+  colors: !include esphome-modular-lvgl-buttons/common/color.yaml
+  # Some nice basic fonts
+  fonts: !include esphome-modular-lvgl-buttons/common/fonts.yaml
+  # 1000s of glyphs
+  glyphs: !include esphome-modular-lvgl-buttons/common/mdi_glyph_substitutions.yaml
+  # Some basic sensors
+
+  ######  UNCOMMENT FOR INSTALL ######
+  sensors: !include esphome-modular-lvgl-buttons/sensors/sensors_base.yaml
+  # sensors: !include esphome-modular-lvgl-buttons/sensors/sensors_base-SDL.yaml
+  # Styles + Themes
+  # theme_style: !include esphome-modular-lvgl-buttons/common/theme_style.yaml
+  # Use this theme for debugging
+  # theme_style: !include esphome-modular-lvgl-buttons/common/theme_style_debug.yaml
+  # Include if your touch screen has a backlight. Also sets the time from HA
+  backlight: !include esphome-modular-lvgl-buttons/common/backlignt_time.yaml
+  
+  # Harware description file
+  hardware: !include esphome-modular-lvgl-buttons/hardware/waveshare-esp32-p4-wifi6-touch-lcd-7b.yaml
+  # hardware: !include esphome-modular-lvgl-buttons/hardware/SDL-lvgl.yaml
+  
+  # Basic boot screen with ESPHome logo and device diagnostic info
+  loading_screen: !include esphome-modular-lvgl-buttons/pages/loading_480px.yaml
+  # info screen - WiFi login, IP address, MAC address etc
+  info_screen: !include esphome-modular-lvgl-buttons/pages/info.yaml
+
+
+#   # Weather packages
+#   # Build icon set from .svg files
+  weather_icons_100: !include
+    file: esphome-modular-lvgl-buttons/weather/weather_icons.yaml
+    vars:
+      size: 100
+#   # Display weather forcast using icon set (defined above)
+  weather_forcast_100: !include
+    file: esphome-modular-lvgl-buttons/weather/weather_forecast.yaml
+    vars:
+      size: 100
+
+  weather_forcast_hourly_100: !include
+    file: esphome-modular-lvgl-buttons/weather/weather_forecast_hourly.yaml
+    vars:
+      size: 100
+
+
+######  WIDGETS/BUTTONS ######
+  # hourly_1: !include { file: esphome-modular-lvgl-buttons/widgets/hourly_forecast.yaml }
+  hourly_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/hourly_forecast.yaml
+    vars:
+      uid: hourly_widget
+      row: 1
+      column: 2
+      row_span: 2
+      column_span: 4
+
+  # daily_1: !include { file: esphome-modular-lvgl-buttons/widgets/daily_forecast.yaml }
+
+  daily_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/daily_forecast.yaml
+    vars:
+      uid: daily_widget
+      row: 3
+      column: 2
+      row_span: 2
+      column_span: 4
+
+  # current_1: !include { file: esphome-modular-lvgl-buttons/widgets/current_conditions.yaml }
+  current_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/current_conditions.yaml
+    vars:
+      uid: current_widget
+      row: 1
+      column: 0
+      row_span: 4
+      column_span: 2
+
+  temp_outdoor_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: outdoor_temp
+      row: 0
+      column: 0
+      icon: $mdi_sun_thermometer
+      label_text: "Outdoor"
+      entity_id: "sensor.gw2000b_outdoor_temperature"
+      text_format: "%s°"
+      text_font: nunito_36
+      label_font: nunito_18
+  
+  indoor_temp_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: indoor_temp
+      row: 0
+      column: 1
+      icon: $mdi_home_thermometer
+      label_text: "Indoor"
+      entity_id: "sensor.sensorbitch1_temperature"
+      text_format: "%s°"
+      text_font: nunito_36
+      label_font: nunito_18
+
+  max_daily_wind_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: max_daily_wind
+      row: 1
+      column: 0
+      icon: $mdi_weather_windy
+      label_text: "Max Wind"
+      entity_id: "sensor.gw2000b_max_daily_wind_gust"
+      text_format: "%s mph"
+      text_font: nunito_24
+      label_font: nunito_16
+
+  wind_gust_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: wind_gust
+      row: 1
+      column: 1
+      icon: $mdi_weather_windy
+      label_text: "Wind Gust"
+      entity_id: "sensor.gw2000b_wind_gust"
+      text_format: "%s mph"
+      text_font: nunito_24
+      label_font: nunito_16
+
+  wind_speed_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: wind_speed
+      row: 2
+      column: 0
+      icon: $mdi_weather_windy
+      label_text: "Wind Spd"
+      entity_id: "sensor.gw2000b_wind_speed"
+      text_format: "%s mph"
+      text_font: nunito_24
+      label_font: nunito_16
+
+  daily_rain_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: daily_rain
+      row: 2
+      column: 1
+      icon: $mdi_weather_rainy
+      label_text: "Daily Rain"
+      entity_id: "sensor.gw2000b_daily_rain_rate_piezo"
+      text_format: "%s in"
+      text_font: nunito_24
+      label_font: nunito_16
+
+  rain_rate_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: rain_rate
+      row: 3
+      column: 0
+      icon: $mdi_weather_pouring
+      label_text: "Rain Rate"
+      entity_id: "sensor.gw2000b_rain_rate_piezo"
+      text_format: "%s in/h"
+      text_font: nunito_24
+      label_font: nunito_16
+
+  humidity_outdoor_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/weather_status_widget.yaml
+    vars:
+      uid: outdoor_humidity
+      row: 3
+      column: 1
+      icon: $mdi_water_percent
+      label_text: "Humidity"
+      entity_id: "sensor.gw2000b_humidity"
+      text_format: "%s%%"
+      text_font: nunito_24
+      label_font: nunito_16
+
+
+  garage_1: !include
+    file: esphome-modular-lvgl-buttons/buttons/garage_button.yaml
+    vars:
+      uid: garage_1
+      row: 1
+      column: 6
+      row_span: 1
+      column_span: 1
+      text: "Closed"
+      text_font: nunito_18
+      icon_closed: $mdi_garage
+      icon_open: $mdi_garage_open
+      icon_transition: $mdi_garage_alert
+      entity_id: "cover.ratgdov25i_18ebf2_door"
+
+  garage_2: !include
+    file: esphome-modular-lvgl-buttons/buttons/garage_button.yaml
+    vars:
+      uid: garage_2
+      row: 2
+      column: 6
+      row_span: 1
+      column_span: 1
+      text: "Closed"
+      text_font: nunito_18
+      icon_closed: $mdi_garage_variant
+      icon_open: $mdi_garage_open_variant
+      icon_transition: $mdi_garage_alert_variant
+      entity_id: "cover.maindoor_door"
+
+
+######  CHRISTMAS LIGHTS  ######
+  # indoor_xmas_1: !include
+  #   file: esphome-modular-lvgl-buttons/buttons/switch_button.yaml
+  #   vars:
+  #     uid: indoor_xmas_1
+  #     row: 5
+  #     column: 0
+  #     text: "Indoor Xmas"
+  #     text_font: nunito_16
+  #     icon: $mdi_string_lights
+  #     entity_id: "switch.indoor_xmas"
+
+  # outdoor_xmas_1: !include
+  #   file: esphome-modular-lvgl-buttons/buttons/switch_button.yaml
+  #   vars:
+  #     uid: outdoor_xmas_1
+  #     row: 5
+  #     column: 1
+  #     text: "Outdoor Xmas"
+  #     text_font: nunito_16
+  #     icon: $mdi_string_lights
+  #     entity_id: "switch.outdoor_xmas"
+
+  porch_1: !include
+    file: esphome-modular-lvgl-buttons/buttons/switch_button.yaml
+    vars:
+      uid: porch_1
+      row: 5
+      column: 0
+      text: "Porch"
+      text_font: nunito_16
+      icon: $mdi_string_lights
+      entity_id: "switch.zw_outdoor_plug_1_1"
+
+  all_indoor_1: !include
+    file: esphome-modular-lvgl-buttons/buttons/switch_button.yaml
+    vars:
+      uid: all_indoor_1
+      row: 5
+      column: 1
+      text: "All Indoor"
+      text_font: nunito_16
+      icon: $mdi_lamps  # mdi-lamps
+      entity_id: "switch.eveninglights"
+
+  couch_light_1: !include
+    file: esphome-modular-lvgl-buttons/buttons/switch_button.yaml
+    vars:
+      uid: couch_light_1
+      row: 5
+      column: 2
+      text: "Couch"
+      text_font: nunito_16
+      icon: $mdi_lamps  # mdi-lamps
+      entity_id: "switch.zb_plug_1_switch"
+
+  media_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/media.yaml
+    vars:
+      uid: media_1
+      row: 5
+      column: 3
+      column_span: 3
+      text_font: nunito_16
+      #icon: $mdi_power
+
+sensor:
+  - platform: homeassistant
+    id: media_player_volume
+    entity_id: media_player.tx_rz710
+    attribute: volume_level
+    on_value:
+      - lvgl.slider.update:
+          id: slider_media_player
+          value: !lambda return (x * 100);
+      
+# http_request:
+# online_image:
+#   - url: "http://192.168.5.202:8123/api/media_player_proxy/media_player.emby_family_room_tv?token=0e61b0fcc7e10911ca5c074b98e9856a4d5978764e5d057e13ff78a09fc5c8b4&cache=68cbccd7f90b3dbd"
+#     format: JPEG
+#     id: my_online_image
+#     type: RGB565
+#     byte_order: little_endian
+#     # transparency: alpha_channel
+#     update_interval: 30s
+#     on_download_finished:
+#       #- display.page.show: page1
+#       - logger.log: "************** DOWNLOADED ***************"
+#       - lvgl.image.update: 
+#           id: image_id
+#           src: my_online_image
+
+# Define grid
+lvgl:
+  buffer_size: 100%
+  pages:
+    - id: main_page
+      bg_color: black
+      # styles: page_style
+      # <<: !include esphome-modular-lvgl-buttons/widgets/swipe_navigation.yaml
+      layout:
+        type: grid
+        # grid_cell_x_align: stretch
+        # grid_cell_y_align: stretch
+        multiple_widgets_per_cell: true
+        grid_rows: [ fr(10), fr(18), fr(18), fr(18), fr(18), fr(18) ] # fr(90) ]
+        grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1) ]
+      widgets:
+        #######  HEADER #######
+        ##  TODO: Make more modular ##
+        - container:
+            bg_color: header_bg
+            bg_opa: COVER
+            grid_cell_x_align: stretch
+            grid_cell_y_align: stretch
+            grid_cell_column_span: 7
+            border_width: 0
+            radius: 5
+            border_color: very_dark_gray
+            layout:
+              type: grid
+              grid_rows: [ fr(1) ]
+              grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1) ]
+            widgets:
+              - label:
+                  text: "Monday, January 1"
+                  bg_color: header_bg
+                  bg_opa: COVER
+                  id: combined_date
+                  text_font: nunito_18
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 3
+                  grid_cell_x_align: start
+                  grid_cell_y_align: center
+                  text_color: white
+                  pad_left: 8
+                  align: LEFT_MID
+              - label:
+                  bg_color: header_bg
+                  id: time_label
+                  bg_opa: COVER
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 3
+                  grid_cell_column_span: 1
+                  text: "12:00 AM"
+                  text_color: white
+                  text_font: nunito_18
+                  grid_cell_x_align: center
+                  grid_cell_y_align: center
+                  align: CENTER
+              - container:
+                  bg_color: header_bg
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 4
+                  grid_cell_column_span: 1
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: center # stretch
+                  pad_all: 8
+                  widgets:
+                    - button:
+                        width: 100%
+                        height: SIZE_CONTENT # 100%
+                        #border_width: 0
+                        radius: 30
+                        pad_all: 5
+                        pad_left: 8
+                        pad_right: 8
+                        checkable: false
+                        press_lock: false
+                        scroll_on_focus: true
+                        bg_color: header_btn # slate_blue_gray
+                        bg_opa: cover # TRANSP
+                        border_width: 2
+                        border_color: very_dark_gray
+                        id: button_find_g_phone
+                        widgets:
+                          - label:
+                              text_font: $icon_font_3
+                              align: left_mid
+                              id: find_g_phone_icon
+                              text: "\U000F1182"
+                              text_color: dodgerblue
+                          - label:
+                              text_font: nunito_12
+                              align: right_mid
+                              id: find_g_phone_text
+                              text: "Find G Phone"
+                        on_short_click:
+                          - homeassistant.action:
+                              action: input_button.press
+                              data:
+                                entity_id: "input_button.find_g_phone"
+              - container:
+                  bg_color: header_bg
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 5
+                  grid_cell_column_span: 1
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: center
+                  pad_all: 8
+                  shadow_width: 0 
+                  widgets:
+                    - button:
+                        width: 100%
+                        height: SIZE_CONTENT #100%
+                        #border_width: 0
+                        radius: 30
+                        pad_all: 5
+                        pad_left: 8
+                        pad_right: 8
+                        shadow_width: 0
+                        checkable: false
+                        press_lock: false
+                        scroll_on_focus: true
+                        bg_color: header_btn #slate_blue_gray
+                        bg_opa: cover
+                        border_width: 2
+                        border_color: very_dark_gray
+                        id: button_find_k_phone
+                        widgets:
+                          - label:
+                              text_font: $icon_font_3
+                              align: left_mid
+                              id: find_k_phone_icon
+                              text: "\U000F1182"
+                              text_color: dodgerblue
+                          - label:
+                              text_font: nunito_12
+                              align: right_mid
+                              id: find_k_phone_text
+                              text: "Find K Phone"
+                        on_short_click:
+                          - homeassistant.action:
+                              action: input_button.press
+                              data:
+                                entity_id: "input_button.find_k_phone"
+        - slider:
+              id: slider_media_player
+              # x: 60
+              # y: 50
+              width: 30
+              height: 280
+              bg_color: gray
+              grid_cell_x_align: center
+              grid_cell_y_align: center
+              grid_cell_row_pos: 3
+              grid_cell_column_pos: 6
+              grid_cell_row_span: 3
+              grid_cell_column_span: 1
+              pad_all: 8
+              min_value: 0
+              max_value: 100
+              adv_hittest: true
+              on_change:
+                - homeassistant.action:
+                    action: media_player.volume_set
+                    data:
+                      entity_id: media_player.tx_rz710
+                      volume_level: !lambda return (x / 100);
+
+        # - image:
+        #     x: 400
+        #     y: 100
+        #     # align: CENTER
+        #     src: my_online_image
+        #     id: image_id
+            # radius: 11
+            # clip_corner: true
+
+         
+  
+# Add to separate file?
+font:
+  # http://materialdesignicons.com/cdn/7.4.47/
+  - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
+    id: mdi_icons_20
+    size: 25
+    bpp: 8
+    glyphs: [
+      $mdi_phone_in_talk_outline, #mdi-phone-in-talk-outline
+      $mdi_home_thermometer, #mdi-home-thermometer
+      $mdi_sun_thermometer, # mdi-sun-thermometer
+      $mdi_water_percent, # mdi-water-percent
+      $mdi_weather_windy, # mdi-weather-windy
+      $mdi_weather_rainy, # mdi-weather-rainy
+      $mdi_weather_pouring, # mdi-weather-pouring
+      $mdi_play, # mdi-play
+      $mdi_power, # mdi-power
+      $mdi_skip_previous, # mdi-skip-previous
+      $mdi_skip_next, #mdi-skip-next
+    ]
+  
+  - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
+    id: mdi_icons_30
+    size: 30
+    bpp: 8
+    glyphs: [
+      # $mdi_phone_in_talk_outline, #mdi-phone-in-talk-outline
+      $mdi_home_thermometer, #mdi-home-thermometer
+      $mdi_sun_thermometer, # mdi-sun-thermometer
+      $mdi_water_percent, # mdi-water-percent
+      $mdi_weather_windy, # mdi-weather-windy
+      $mdi_weather_rainy, # mdi-weather-rainy
+      $mdi_weather_pouring, # mdi-weather-pouring
+      $mdi_play, # mdi-play
+      $mdi_power, # mdi-power
+      $mdi_skip_previous, # mdi-skip-previous
+      $mdi_skip_next, #mdi-skip-next
+    ]
+
+  - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
+    id: mdi_icons_40
+    size: 40
+    bpp: 8
+    glyphs: [
+      $mdi_lightbulb,  # mdi-lightbulb
+      $mdi_ceiling_light,  # mdi-ceiling-light
+      $mdi_lamp,  # mdi-lamp
+      $mdi_lamps,  # mdi-lamps
+      $mdi_floor_lamp,  # mdi-floor-lamp
+      $mdi_string_lights,  # mdi-string-lights
+      $mdi_track_light,  # mdi-track-light
+      $mdi_bulkhead_light,  # mdi-bulkhead_light
+      $mdi_led_strip,  # mdi-led-strip
+      $mdi_coach_lamp,  # mdi-coach-lamp
+      $mdi_ceiling_fan_light,  # mdi-ceiling-fan-light
+      $mdi_bed,  # mdi-bed
+      $mdi_white_balance_sunny,  # mdi-white-balance-sunny
+      $mdi_brightness_6,  # mdi-brightness-6
+      $mdi_home,
+      $mdi_garage_variant,
+      $mdi_garage,
+      $mdi_garage_open_variant,
+      $mdi_garage_open,
+      $mdi_information_box,
+      $mdi_garage_alert_variant,
+      $mdi_garage_alert,
+      $mdi_phone_in_talk_outline, #mdi-phone-in-talk-outline
+      $mdi_home_thermometer, #mdi-home-thermometer
+      $mdi_sun_thermometer, # mdi-sun-thermometer
+      $mdi_water_percent, # mdi-water-percent
+      $mdi_weather_windy, # mdi-weather-windy
+      $mdi_weather_rainy, # mdi-weather-rainy
+      $mdi_weather_pouring, # mdi-weather-pouring
+      $mdi_play, # mdi-play
+      $mdi_power, # mdi-power
+      $mdi_skip_previous, # mdi-skip-previous
+      $mdi_skip_next, #mdi-skip-next
+    ]
+  - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
+    id: mdi_icons_60
+    size: 60
+    bpp: 8
+    glyphs: [
+      $mdi_string_lights,  # mdi-string-lights
+      $mdi_home,
+      $mdi_garage_variant,
+      $mdi_garage,
+      $mdi_garage_open_variant,
+      $mdi_garage_open,
+      $mdi_garage_alert_variant,
+      $mdi_garage_alert,
+      $mdi_lamps,  # mdi-lamps
+      $mdi_phone_in_talk_outline, #mdi-phone-in-talk-outline
+      $mdi_home_thermometer, #mdi-home-thermometer
+      $mdi_sun_thermometer, # mdi-sun-thermometer
+      $mdi_water_percent, # mdi-water-percent
+      $mdi_weather_windy, # mdi-weather-windy
+      $mdi_weather_rainy, # mdi-weather-rainy
+      $mdi_weather_pouring, # mdi-weather-pouring
+      $mdi_play, # mdi-play
+      $mdi_power, # mdi-power
+      $mdi_skip_previous, # mdi-skip-previous
+      $mdi_skip_next, #mdi-skip-next
+    ]
