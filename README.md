@@ -2,7 +2,8 @@ Forked from https://github.com/agillis/esphome-modular-lvgl-buttons
 
 ## Dev setup
 ### SDL setup 
-https://community.home-assistant.io/t/how-to-virtual-esphome-device-and-development-using-windows-work-in-progress/802669/6
+[More details here](https://community.home-assistant.io/t/how-to-virtual-esphome-device-and-development-using-windows-work-in-progress/802669/6)  
+
 Install 
 - vscode & WSL extension
 - SDL 2
