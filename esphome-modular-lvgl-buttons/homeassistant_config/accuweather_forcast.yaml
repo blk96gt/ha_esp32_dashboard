@@ -5,8 +5,8 @@
 template:
   - trigger:
       - platform: time_pattern
-        hours: 7
-        minutes: 36
+        hours: 10
+        minutes: 0
 
     sensor:
       - name: "time1"
