@@ -90,10 +90,10 @@ pip3 install esphome --upgrade
 ```
 
 ## Waveshare esp32-p4-wifi6-touch-lcd-7b Reference docs
-[Wiki](https://www.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B?srsltid=AfmBOoo9Y7EjqQdv_sgnoF6c126Rnp5BGZYRx9xw3hhQHx_hje2eVhM6)  
+[Waveshare esp32-p4-wifi6-touch-lcd-7b Wiki](https://www.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B?srsltid=AfmBOoo9Y7EjqQdv_sgnoF6c126Rnp5BGZYRx9xw3hhQHx_hje2eVhM6)  
 [Schematic](https://files.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B/ESP32-P4-WIFI6-Touch-LCD-7B.pdf)  
 [Datasheet](https://files.waveshare.com/wiki/common/Esp32-p4_datasheet_en.pdf)  
-[Github](https://github.com/waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B)  
+[Github esp32-p4-wifi6-touch-lcd-7b](https://github.com/waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B)  
 
 ## TODO
 - General
