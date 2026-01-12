@@ -1,7 +1,8 @@
 Forked from https://github.com/agillis/esphome-modular-lvgl-buttons
 
 ## Dev setup
-### SDL setup https://community.home-assistant.io/t/how-to-virtual-esphome-device-and-development-using-windows-work-in-progress/802669/6
+### SDL setup 
+https://community.home-assistant.io/t/how-to-virtual-esphome-device-and-development-using-windows-work-in-progress/802669/6
 Install 
 - vscode & WSL extension
 - SDL 2
@@ -50,7 +51,7 @@ Clean
 esphome clean waveshare-esp32-p4-wifi6-touch-lcd-7b.yaml 
 ```
 ### WSL setup
-Push config from WSL
+Push config from WSL\
 Download - https://github.com/dorssel/usbipd-win/releases
 
 List USB device ID's (PS)
@@ -88,15 +89,15 @@ pip3 install esphome --upgrade
 ```
 
 ## Waveshare esp32-p4-wifi6-touch-lcd-7b Reference docs
-Wiki - https://www.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B?srsltid=AfmBOoo9Y7EjqQdv_sgnoF6c126Rnp5BGZYRx9xw3hhQHx_hje2eVhM6
-Schematic - https://files.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B/ESP32-P4-WIFI6-Touch-LCD-7B.pdf
-Datasheet - https://files.waveshare.com/wiki/common/Esp32-p4_datasheet_en.pdf
-Github - https://github.com/waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B
+Wiki - https://www.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B?srsltid=AfmBOoo9Y7EjqQdv_sgnoF6c126Rnp5BGZYRx9xw3hhQHx_hje2eVhM6  
+Schematic - https://files.waveshare.com/wiki/ESP32-P4-WIFI6-Touch-LCD-7B/ESP32-P4-WIFI6-Touch-LCD-7B.pdf  
+Datasheet - https://files.waveshare.com/wiki/common/Esp32-p4_datasheet_en.pdf  
+Github - https://github.com/waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B  
 
 ## TODO
 - General
-  - [] Code cleanup
-- [] Fix backlight timing
+  - [ ] Code cleanup
+- [x] Fix backlight timing
 - Theme/styles
 - Add media player widget
 - Add battery charge widget
