@@ -97,7 +97,7 @@ pip3 install esphome --upgrade
 
 ## TODO
 - General
-  - [ ] Code cleanup
+  - Code cleanup
   - [ ] Fix backlight timing
 - Theme/styles
 - Media player widget
@@ -119,11 +119,11 @@ pip3 install esphome --upgrade
     - Drop off from 3.25 @ 10:06:32am
     - Screen died 2.54 @ 10:23am
 - Weather
-  - Update HA weather template to fix hourly icons when partyly cloudy with sun/moon
+  - [ ] Update HA weather template to fix hourly icons when partyly cloudy with sun/moon
   - daily/hourly_forecast
     - Update styles
   - current_conditions/weather_status_widget
-    - Make more modular
-    - When single widget is clicked, display graph with historical values
+    - [ ] Improve style customization
+    - [ ] When single widget is clicked, display graph with historical values
   - 
 
