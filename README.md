@@ -22,7 +22,7 @@ python3 -m venv vesphome
 
 - Start venv
 ```Shell
-source chooseanamehere/bin/activate
+source vesphome/bin/activate
 ```
 - Install esphome
 ```Shell
