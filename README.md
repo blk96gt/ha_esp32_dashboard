@@ -74,14 +74,14 @@ List device (WSL)
 lsusb
 ```
 
-Detach (PS)
-```PowerShell
-usbipd detach --busid <busid>
-```
-
 Push via USB (WSL)
 ```Shell
 esphome run waveshare-esp32-p4-wifi6-touch-lcd-7b_display_modular.yaml --device /dev/ttyACM0
+```
+
+Disconnect USB or run with detach switch when finished (PS) 
+```PowerShell
+usbipd detach --busid <busid>
 ```
 
 Update esphome
