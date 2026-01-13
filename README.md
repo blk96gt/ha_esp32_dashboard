@@ -77,6 +77,87 @@ lvgl:
                               data:
                                 entity_id: "input_button.button1"
 ```
+## Weather widgets
+Add under `packages: ` section
+```Yaml
+  hourly_1: !include
+    file: esphome-modular-lvgl-buttons/widgets/hourly_forecast.yaml
+    vars:
+      uid: hourly_widget
+      row: 1
+      column: 2
+      row_span: 2
+      column_span: 4
+```
+
+Structure of current `hourly_forecast` `daily_forecast` and `current_conditions` widgets
+```Yaml
+lvgl:
+  pages:
+    - id: !extend main_page
+      widgets:
+        - container:
+            id: ${uid}
+            grid_cell_row_pos: ${row}
+            grid_cell_column_pos: ${column}
+            grid_cell_row_span: ${row_span | default(1)}
+            grid_cell_column_span: ${column_span | default(1)}
+            grid_cell_x_align: stretch
+            grid_cell_y_align: stretch
+            bg_color: slate_blue_gray
+            bg_opa: COVER
+            border_width: 2
+            border_color: very_dark_gray
+            radius: 10
+            layout:
+              type: grid
+              grid_rows: [ fr(1), content, fr(1), fr(1) ]
+              grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1) ]
+            widgets:
+              ########  Day 0  ########
+              - label:
+                  id: forecast_day_0
+                  <<: *forcast_label_base
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 1
+                  text: ???
+              - image:
+                  id: forecast_condition_icon_0
+                  <<: *forcast_image_base
+                  grid_cell_row_pos: 1
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 1
+                  src: unknown_100
+              - label:
+                  id: forecast_temperature_hi_0
+                  <<: *forcast_label_base
+                  grid_cell_row_pos: 2
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 1
+                  text: "---°"
+              - label:
+                  id: forecast_temperature_lo_0
+                  <<: *forcast_label_base_lo
+                  grid_cell_row_pos: 3
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 1
+                  text: "---°"
+              
+              ########  Day 1  ########
+              - label:
+                  ...
+              - image:
+                  ...
+              - label:
+                  ...
+              - label:
+                  ...
+
+              ########  Day 2  ########
+              - label:
+                  ...
+```
 
 
 ## Battery
