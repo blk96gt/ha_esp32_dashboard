@@ -1,7 +1,100 @@
 Forked from https://github.com/agillis/esphome-modular-lvgl-buttons
 
-## Dev setup
-### SDL setup 
+# Notes
+## LVGL Structure
+Main LVGL
+```Yaml
+lvgl:
+  buffer_size: 100%
+  pages:
+    - id: main_page
+      layout:
+        type: grid
+        multiple_widgets_per_cell: true
+        grid_rows: [ fr(10), fr(18), fr(18), fr(18), fr(18), fr(18) ] # fr(90) ]
+        grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1) ]
+      widgets:
+        #######  HEADER #######
+        - container:
+            layout:
+              type: grid
+              grid_rows: [ fr(1) ]
+              grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1) ]
+            widgets:
+              - label:
+                  text: "Monday, January 1"
+                  text_font: nunito_18
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 0
+                  grid_cell_column_span: 3
+                  grid_cell_x_align: start
+                  grid_cell_y_align: center
+                  text_color: white
+                  pad_left: 8
+                  align: LEFT_MID
+              - label:
+                  ...
+              - container:
+                  bg_color: header_bg
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 4
+                  grid_cell_column_span: 1
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: center # stretch
+                  pad_all: 8
+                  widgets:
+                    - button:
+                        widgets:
+                          - label:
+                              text_font: $icon_font_3
+                              align: left_mid
+                              id: icon_id
+                              text: "\U000F1182"
+                              text_color: dodgerblue
+                          - label:
+                              text_font: nunito_12
+                              align: right_mid
+                              id: label_text
+                              text: "Text"
+                        on_short_click:
+                          - homeassistant.action:
+                              action: input_button.press
+                              data:
+                                entity_id: "input_button.button1"
+              - container:
+                  postions: ....
+                  widgets:
+                    - button:
+                        ...
+                        widgets:
+                          - label:
+                              ...
+                          - label:
+                              ...
+                        on_short_click:
+                          - homeassistant.action:
+                              action: input_button.press
+                              data:
+                                entity_id: "input_button.button1"
+```
+
+
+## Battery
+Battery voltage: GPIO20
+```YAML
+  attenuation: 12dB
+  samples: 10
+  filters:
+    - multiply: 3.0
+```
+- Max charge ~4.1v
+- Min charge ~3.25
+  - Drop off from 3.25 @ 10:06:32am
+  - Screen died 2.54 @ 10:23am
+
+
+# Dev setup
+## SDL setup 
 [More details here](https://community.home-assistant.io/t/how-to-virtual-esphome-device-and-development-using-windows-work-in-progress/802669/6)  
 
 Install 
@@ -51,7 +144,7 @@ Clean
 ```Shell
 esphome clean waveshare-esp32-p4-wifi6-touch-lcd-7b.yaml 
 ```
-### WSL setup
+## WSL setup
 Push config from WSL\
 Download - https://github.com/dorssel/usbipd-win/releases
 
@@ -95,7 +188,7 @@ pip3 install esphome --upgrade
 [Datasheet](https://files.waveshare.com/wiki/common/Esp32-p4_datasheet_en.pdf)  
 [Github esp32-p4-wifi6-touch-lcd-7b](https://github.com/waveshareteam/ESP32-P4-WIFI6-Touch-LCD-7B)  
 
-## TODO
+# TODO
 - General
   - Code cleanup
   - [ ] Fix backlight timing
@@ -107,17 +200,7 @@ pip3 install esphome --upgrade
   - [ ] Skip
   - [ ] Play/pause
 - Add battery charge widget
-  - Battery voltage: GPIO20
-    - ```YAML
-      attenuation: 12dB
-      samples: 10
-      filters:
-        - multiply: 3.0
-      ```
-  - Max charge ~4.1v
-  - Min charge ~3.25
-    - Drop off from 3.25 @ 10:06:32am
-    - Screen died 2.54 @ 10:23am
+
 - Weather
   - [ ] Update HA weather template to fix hourly icons when partyly cloudy with sun/moon
   - daily/hourly_forecast
