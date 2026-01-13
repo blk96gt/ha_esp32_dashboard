@@ -10,8 +10,8 @@ lvgl:
     - id: main_page
       layout:
         type: grid
-        multiple_widgets_per_cell: true
-        grid_rows: [ fr(10), fr(18), fr(18), fr(18), fr(18), fr(18) ] # fr(90) ]
+        multiple_widgets_per_cell: true # added for testing
+        grid_rows: [ fr(10), fr(18), fr(18), fr(18), fr(18), fr(18) ] 
         grid_columns: [ fr(1), fr(1), fr(1), fr(1), fr(1), fr(1), fr(1) ]
       widgets:
         #######  HEADER #######
@@ -77,6 +77,7 @@ lvgl:
                               data:
                                 entity_id: "input_button.button1"
 ```
+
 ## Weather widgets
 Add under `packages: ` section
 ```Yaml
@@ -130,19 +131,9 @@ lvgl:
                   grid_cell_column_span: 1
                   src: unknown_100
               - label:
-                  id: forecast_temperature_hi_0
-                  <<: *forcast_label_base
-                  grid_cell_row_pos: 2
-                  grid_cell_column_pos: 0
-                  grid_cell_column_span: 1
-                  text: "---°"
+                  ...
               - label:
-                  id: forecast_temperature_lo_0
-                  <<: *forcast_label_base_lo
-                  grid_cell_row_pos: 3
-                  grid_cell_column_pos: 0
-                  grid_cell_column_span: 1
-                  text: "---°"
+                  ...
               
               ########  Day 1  ########
               - label:
@@ -158,7 +149,6 @@ lvgl:
               - label:
                   ...
 ```
-
 
 ## Battery
 Battery voltage: GPIO20
