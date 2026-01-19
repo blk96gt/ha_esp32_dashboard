@@ -1,8 +1,9 @@
 # Substitution variables used through the codebase
 substitutions:
+  icons_20: mdi_icons_20
   icon_font: mdi_icons_40
   icon_font_2: mdi_icons_60
-  icon_font_3: mdi_icons_20
+  icon_font_3: mdi_icons_25
   icon_font_4: mdi_icons_30
   text_font: nunito_24
   text_color: white
@@ -15,7 +16,7 @@ substitutions:
   label_on_color: "white"
   label_off_color: "gray"
   button_text_color: "white"
-  touchscreen_idle_timeout: "30s"
+  touchscreen_idle_timeout: "60s"
   touchscreen_daytime_brightness: "100%"
   touchscreen_nighttime_brightness: "50%"
   button_height_single: '109px'
@@ -28,7 +29,7 @@ substitutions:
   # Day mode is set to Sunrise
   # Evening mode is set to sunset
   # Set Night mode  at Mightnight here
-  screen_night_hour: '1'
+  screen_night_hour: '21'
   screen_night_minute: '0'
 
   # Screen Size
@@ -99,7 +100,7 @@ packages:
   # Use this theme for debugging
   # theme_style: !include esphome-modular-lvgl-buttons/common/theme_style_debug.yaml
   # Include if your touch screen has a backlight. Also sets the time from HA
-  backlight: !include esphome-modular-lvgl-buttons/common/backlignt_time.yaml
+  backlight: !include esphome-modular-lvgl-buttons/common/backlight_time.yaml
   
   # Harware description file
   hardware: !include esphome-modular-lvgl-buttons/hardware/waveshare-esp32-p4-wifi6-touch-lcd-7b.yaml
@@ -388,10 +389,28 @@ sensor:
 #       - lvgl.image.update: 
 #           id: image_id
 #           src: my_online_image
-
+# deep_sleep:
+#   run_duration: 120s
+#   esp32_ext1_wakeup:
+#     pins: [2,3,4,5,6]
+#     mode: ANY_HIGH
+  # wakeup_pin: GPIO6
+  # touch_wakeup: true
 # Define grid
 lvgl:
   buffer_size: 100%
+  msgboxes:
+    - id: message_box
+      close_button: true
+      title: IP Address
+      bg_color: header_bg # 0x808080
+      bg_opa: cover
+      text_color: white
+      border_color: black
+      widgets:
+        - label:
+            id: test_label
+            text: "Some text here"
   pages:
     - id: main_page
       bg_color: black
@@ -534,6 +553,28 @@ lvgl:
                               action: input_button.press
                               data:
                                 entity_id: "input_button.find_k_phone"
+              - container:
+                  bg_color: header_bg
+                  grid_cell_row_pos: 0
+                  grid_cell_column_pos: 6
+                  grid_cell_column_span: 1
+                  grid_cell_x_align: stretch
+                  grid_cell_y_align: center
+                  pad_all: 8
+                  shadow_width: 0
+                  widgets:
+                    - label:
+                        text_font: $icon_font_3
+                        align: center
+                        id: battery_icon
+                        text: $mdi_battery
+                        text_color: white
+                    - label:
+                        text_font: nunito_18
+                        align: right_mid
+                        id: bat_perc_label
+                        text_color: white
+                        text: "0%"
         - slider:
               id: slider_media_player
               # x: 60
@@ -574,9 +615,38 @@ font:
   # http://materialdesignicons.com/cdn/7.4.47/
   - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
     id: mdi_icons_20
+    size: 20
+    bpp: 8
+    glyphs: [
+      $mdi_battery,
+      $mdi_battery_10,
+      $mdi_battery_20,
+      $mdi_battery_30,
+      $mdi_battery_40,
+      $mdi_battery_50,
+      $mdi_battery_60,
+      $mdi_battery_70,
+      $mdi_battery_80,
+      $mdi_battery_90,
+      $mdi_battery_outline,
+    ]
+
+  - file: 'https://github.com/Templarian/MaterialDesign-Webfont/raw/v7.4.47/fonts/materialdesignicons-webfont.ttf'
+    id: mdi_icons_25
     size: 25
     bpp: 8
     glyphs: [
+      $mdi_battery,
+      $mdi_battery_10,
+      $mdi_battery_20,
+      $mdi_battery_30,
+      $mdi_battery_40,
+      $mdi_battery_50,
+      $mdi_battery_60,
+      $mdi_battery_70,
+      $mdi_battery_80,
+      $mdi_battery_90,
+      $mdi_battery_outline,
       $mdi_phone_in_talk_outline, #mdi-phone-in-talk-outline
       $mdi_home_thermometer, #mdi-home-thermometer
       $mdi_sun_thermometer, # mdi-sun-thermometer

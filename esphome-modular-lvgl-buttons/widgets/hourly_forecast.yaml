@@ -22,6 +22,12 @@
       grid_cell_y_align: center
       text_color: white
 
+    - &forecast_container_hourly
+      bg_color: slate_blue_gray
+      bg_opa: COVER
+      border_width: 2
+      border_color: very_dark_gray
+      radius: 10
 
 lvgl:
   pages:
@@ -35,17 +41,8 @@ lvgl:
             grid_cell_column_span: ${column_span | default(1)}
             grid_cell_x_align: stretch
             grid_cell_y_align: stretch
-            # grid_cell_x_align: stretch
-            # grid_cell_y_align: stretch
-            # grid_cell_row_pos: 1
-            # grid_cell_column_pos: 0
-            # grid_cell_row_span: 2
-            # grid_cell_column_span: 4
-            bg_color: slate_blue_gray
-            bg_opa: COVER
-            border_width: 2
-            border_color: very_dark_gray
-            radius: 10
+            <<: *forecast_container_hourly
+
             layout:
                 type: grid
                 grid_rows: [ fr(1), content, fr(1) ]

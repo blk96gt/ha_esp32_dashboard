@@ -28,8 +28,6 @@ lvgl:
                   grid_cell_column_pos: ${column}
                   grid_cell_row_span: ${row_span | default(1)}
                   grid_cell_column_span: ${column_span | default(1)}
-                  # grid_cell_row_pos: 0
-                  # grid_cell_column_pos: 0
                   grid_cell_x_align: stretch
                   grid_cell_y_align: stretch
                   bg_opa: cover

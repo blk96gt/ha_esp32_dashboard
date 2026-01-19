@@ -15,6 +15,17 @@ external_components:
     components: [mipi_dsi]
     refresh: 1h
 
+# deep_sleep:
+#   id: deep_sleep_1
+#   # timings for deep_sleep moved to be driven by rain_gauge
+#   wakeup_pin:                # wake up if a rain gauge pulse is detected
+#     number: GPIO6
+#     # allow_other_uses: true
+#     inverted: true
+#     mode:                    # prevent lots of ON/OFF events
+#       input: true
+#       pullup: false
+
 esp32:
   variant: esp32p4
   flash_size: 32MB
@@ -32,8 +43,6 @@ esp32_hosted:
   d0_pin: GPIO14
   d1_pin: GPIO15
   d2_pin: GPIO16
-    # number: GPIO16
-    # allow_other_uses: true
   d3_pin: GPIO17
   active_high: true
 
@@ -68,17 +77,67 @@ touchscreen:
       swap_xy: false
       mirror_x: false
       mirror_y: false
-      # on_touch:
-            # - logger.log:
+    on_touch:
+      then:
+        - logger.log: "LVGL is active"
+        - lvgl.resume:
+        - lvgl.widget.redraw:
+        - if:
+            condition:
+              - lambda: 'return id(brightness_mode).current_option() == "Day";'
+            then:
+              - light.turn_on:
+                  id: display_backlight
+                  brightness: ${touchscreen_daytime_brightness}
+        - if:
+            condition:
+              - lambda: 'return id(brightness_mode).current_option() == "Evening";'
+            then:
+              - light.turn_on:
+                  id: display_backlight
+                  brightness: ${touchscreen_nighttime_brightness}
+        - if:
+            condition:
+              - lambda: 'return id(brightness_mode).current_option() == "Night";'
+            then:
+              - light.turn_on:
+                  id: display_backlight
+                  brightness: ${touchscreen_nighttime_brightness}
+    # on_touch:
+    #   then:
+    #     - logger.log: "TOUCHED!!!!!!"
             # format: Touch at (%d, %d)
             # args: [touch.x, touch.y]
-            # - lambda: |-
-                # ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
-                # touch.x,
-                # touch.y,
-                # touch.x_raw,
-                # touch.y_raw
-                # );
+            #   - lambda: |-
+            #       ESP_LOGI("cal", "x=%d, y=%d, x_raw=%d, y_raw=%0d",
+            #       touch.x,
+            #       touch.y,
+            #       touch.x_raw,
+            #       touch.y_raw
+            #       );
+# binary_sensor:
+#   - platform: touchscreen
+#     name: "ESP32 Touch Pad"
+#     pin: GPIO6
+#     threshold: 1000
+
+# light_sleep:
+
+binary_sensor:
+  - platform: touchscreen
+    id: screen_touch
+    name: Top Left Touch Button
+    x_min: 0
+    x_max: 512
+    y_min: 0
+    y_max: 100
+    # page_id: home_page_id
+    use_raw: true
+    on_press:
+      then:
+        - logger.log: "============ IT WAS TOUCHED!!!!!>!!> ==============="
+        - lvgl.widget.show:
+            id: message_box
 
 # -------------------------------------------
 # Backlight
@@ -118,6 +177,9 @@ display:
 # LVGL settings required for this display
 lvgl:
   byte_order: little_endian
+
+# esp32_touch:
+#   setup_mode: true
 
 # -------------------------------------------
 # Audio devices

@@ -1,5 +1,5 @@
-.forcast_styles:
-    - &forcast_label_base
+.forecast_styles:
+    - &forecast_label_base
       bg_opa: TRANSP
       text_font: nunito_18
       border_width: 0
@@ -7,7 +7,7 @@
       grid_cell_y_align: center
       text_color: white
 
-    - &forcast_label_base_lo
+    - &forecast_label_base_lo
       bg_opa: TRANSP
       text_font: nunito_18
       grid_cell_x_align: center
@@ -16,9 +16,15 @@
       text_color: dodgerblue
       #height: SIZE_CONTENT
 
-    - &forcast_image_base
+    - &forecast_image_base
       height: SIZE_CONTENT
 
+    - &forecast_container
+      bg_color: slate_blue_gray
+      bg_opa: COVER
+      border_width: 2
+      border_color: very_dark_gray
+      radius: 10
 
 lvgl:
   pages:
@@ -32,17 +38,7 @@ lvgl:
             grid_cell_column_span: ${column_span | default(1)}
             grid_cell_x_align: stretch
             grid_cell_y_align: stretch
-            # grid_cell_x_align: stretch
-            # grid_cell_y_align: stretch
-            # grid_cell_row_pos: 3
-            # grid_cell_column_pos: 0
-            # grid_cell_row_span: 2
-            # grid_cell_column_span: 4
-            bg_color: slate_blue_gray
-            bg_opa: COVER
-            border_width: 2
-            border_color: very_dark_gray
-            radius: 10
+            <<: *forecast_container
             layout:
               type: grid
               grid_rows: [ fr(1), content, fr(1), fr(1) ]
@@ -51,28 +47,28 @@ lvgl:
               ########  Day 0  ########
               - label:
                   id: forecast_day_0
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 0
                   grid_cell_column_span: 1
                   text: ???
               - image:
                   id: forecast_condition_icon_0
-                  <<: *forcast_image_base
+                  <<: *forecast_image_base
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 0
                   grid_cell_column_span: 1
                   src: unknown_100
               - label:
                   id: forecast_temperature_hi_0
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 0
                   grid_cell_column_span: 1
                   text: "---°"
               - label:
                   id: forecast_temperature_lo_0
-                  <<: *forcast_label_base_lo
+                  <<: *forecast_label_base_lo
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 0
                   grid_cell_column_span: 1
@@ -81,28 +77,28 @@ lvgl:
               ########  Day 1  ########
               - label:
                   id: forecast_day_1
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 1
                   grid_cell_column_span: 1
                   text: ???
               - image:
                   id: forecast_condition_icon_1
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 1
                   grid_cell_column_span: 1
                   src: unknown_100
               - label:
                   id: forecast_temperature_hi_1
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 1
                   grid_cell_column_span: 1
                   text: "---°"
               - label:
                   id: forecast_temperature_lo_1
-                  <<: *forcast_label_base_lo
+                  <<: *forecast_label_base_lo
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 1
                   grid_cell_column_span: 1
@@ -111,28 +107,28 @@ lvgl:
               ########  Day 2  ########
               - label:
                   id: forecast_day_2
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 2
                   grid_cell_column_span: 1
                   text: ???
               - image:
                   id: forecast_condition_icon_2
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 2
                   grid_cell_column_span: 1
                   src: unknown_100
               - label:
                   id: forecast_temperature_hi_2
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 2
                   grid_cell_column_span: 1
                   text: "---°"
               - label:
                   id: forecast_temperature_lo_2
-                  <<: *forcast_label_base_lo
+                  <<: *forecast_label_base_lo
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 2
                   grid_cell_column_span: 1
@@ -141,28 +137,28 @@ lvgl:
               ########  Day 3  ########
               - label:
                   id: forecast_day_3
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 3
                   grid_cell_column_span: 1
                   text: ???
               - image:
                   id: forecast_condition_icon_3
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 3
                   grid_cell_column_span: 1
                   src: unknown_100
               - label:
                   id: forecast_temperature_hi_3
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 3
                   grid_cell_column_span: 1
                   text: "---°"
               - label:
                   id: forecast_temperature_lo_3
-                  <<: *forcast_label_base_lo
+                  <<: *forecast_label_base_lo
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 3
                   grid_cell_column_span: 1
@@ -171,28 +167,28 @@ lvgl:
               ########  Day 4  ########
               - label:
                   id: forecast_day_4
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 0
                   grid_cell_column_pos: 4
                   grid_cell_column_span: 1
                   text: ???
               - image:
                   id: forecast_condition_icon_4
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 1
                   grid_cell_column_pos: 4
                   grid_cell_column_span: 1
                   src: unknown_100
               - label:
                   id: forecast_temperature_hi_4
-                  <<: *forcast_label_base
+                  <<: *forecast_label_base
                   grid_cell_row_pos: 2
                   grid_cell_column_pos: 4
                   grid_cell_column_span: 1
                   text: "---°"
               - label:
                   id: forecast_temperature_lo_4
-                  <<: *forcast_label_base_lo
+                  <<: *forecast_label_base_lo
                   grid_cell_row_pos: 3
                   grid_cell_column_pos: 4
                   grid_cell_column_span: 1

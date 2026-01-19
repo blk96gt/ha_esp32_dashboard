@@ -275,7 +275,9 @@ pip3 install esphome --upgrade
 - Weather
   - [ ] Update HA weather template to fix hourly icons when partyly cloudy with sun/moon
   - daily/hourly_forecast
-    - Update styles
+    - [x] Update hourly styles
+    - [x] Update daily styles
+    - [ ] Combine daily and hourly styles?
   - current_conditions/weather_status_widget
     - [ ] Improve style customization
     - [ ] When single widget is clicked, display graph with historical values

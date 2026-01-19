@@ -9,84 +9,202 @@ button:
     id: Reset
     entity_category: config
 
-
+# switch:
+#   - platform: template
+#     name: Antiburn
+#     id: switch_antiburn
+#     icon: mdi:television-shimmer
+#     optimistic: true
+#     entity_category: "config"
+#     turn_on_action:
+#       - logger.log: "Starting Antiburn"
+#       - if:
+#           condition: lvgl.is_paused
+#           then:
+#             - lvgl.resume:
+#             - lvgl.widget.redraw:
+#       - lvgl.pause:
+#           show_snow: true
+#     turn_off_action:
+#       - logger.log: "Stopping Antiburn"
+#       - if:
+#           condition: lvgl.is_paused
+#           then:
+#             - lvgl.resume:
+#             - lvgl.widget.redraw:
 
 sensor:
   - platform: adc
     pin: GPIO20
     name: "GPIO20"
+    id: GPIO20
     update_interval: 30s
     accuracy_decimals: 3
     attenuation: 12dB
     samples: 10
     filters:
       - multiply: 3.0
-
-  - platform: adc
-    pin: GPIO21
-    name: "GPIO21"
-    accuracy_decimals: 2
-    update_interval: 30s
-    attenuation: 12dB
-    samples: 10
-    # filters:
-    #   - multiply: 2.0
-
-  - platform: adc
-    pin: GPIO22
-    name: "GPIO22"
-    update_interval: 30s
-  
-  - platform: adc
-    pin: GPIO49
-    name: "GPIO49"
-    accuracy_decimals: 2
-    update_interval: 30s
-    attenuation: 12dB
-    samples: 10
+      # - calibrate_linear:
+      #   - 3.0 -> 0.0
+      #   - 4.0 -> 100.0
+  - platform: template
+    name: Battery Status
+    id: bat_perc
+    update_interval: 15s
+    accuracy_decimals: 1
+    lambda: |-
+      return id(GPIO20).state;
+    icon: mdi:battery
     filters:
-      - multiply: 2.0
+      - calibrate_linear:
+        - 3.0 -> 0.0
+        - 4.0 -> 100.0
+      - clamp:
+          min_value: 0
+          max_value: 100
+    unit_of_measurement: "%"
+    on_value:
+        then:
+          - lvgl.label.update:
+              id: bat_perc_label
+              text:
+                format: "%.0f%%"
+                args: [ 'id(bat_perc).state' ]
+
+  - platform: template
+    id: bat_icon
+    update_interval: 5s
+    lambda: |-
+      return id(bat_perc).state;
+    on_value_range:
+      - above: 95
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery
+      - below: 95
+        above: 90
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_90
+      - below: 90
+        above: 80
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_80
+      - below: 80
+        above: 70
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_70
+      - below: 70
+        above: 60
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_60
+      - below: 60
+        above: 50
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_50
+      - below: 50
+        above: 40
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_40
+      - below: 40
+        above: 30
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_30
+      - below: 30
+        above: 20
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_20
+      - below: 20
+        above: 10
+        then:
+          - lvgl.label.update:
+              id: battery_icon
+              text: $mdi_battery_10
+
+
     
 
-  - platform: adc
-    pin: GPIO50
-    name: "GPIO50"
-    accuracy_decimals: 2
-    update_interval: 30s
-    attenuation: 12dB
-    samples: 10
-    filters:
-      - multiply: 2.0  
+  # - platform: adc
+  #   pin: GPIO21
+  #   name: "GPIO21"
+  #   accuracy_decimals: 2
+  #   update_interval: 30s
+  #   attenuation: 12dB
+  #   samples: 10
+  #   # filters:
+  #   #   - multiply: 2.0
 
-  - platform: adc
-    pin: GPIO51
-    name: "GPIO51"
-    accuracy_decimals: 2
-    update_interval: 30s
-    attenuation: 12dB
-    samples: 10
-    filters:
-      - multiply: 2.0 
-
-  - platform: adc
-    pin: GPIO52
-    name: "GPIO52"
-    accuracy_decimals: 2
-    update_interval: 30s
-    attenuation: 12dB
-    samples: 10
-    filters:
-      - multiply: 2.0 
+  # - platform: adc
+  #   pin: GPIO22
+  #   name: "GPIO22"
+  #   update_interval: 30s
   
-  - platform: adc
-    pin: GPIO53
-    name: "GPIO53"
-    accuracy_decimals: 2
-    update_interval: 30s
-    attenuation: 12dB
-    samples: 10
-    filters:
-      - multiply: 2.0 
+  # - platform: adc
+  #   pin: GPIO49
+  #   name: "GPIO49"
+  #   accuracy_decimals: 2
+  #   update_interval: 30s
+  #   attenuation: 12dB
+  #   samples: 10
+  #   filters:
+  #     - multiply: 2.0
+    
+
+  # - platform: adc
+  #   pin: GPIO50
+  #   name: "GPIO50"
+  #   accuracy_decimals: 2
+  #   update_interval: 30s
+  #   attenuation: 12dB
+  #   samples: 10
+  #   filters:
+  #     - multiply: 2.0  
+
+  # - platform: adc
+  #   pin: GPIO51
+  #   name: "GPIO51"
+  #   accuracy_decimals: 2
+  #   update_interval: 30s
+  #   attenuation: 12dB
+  #   samples: 10
+  #   filters:
+  #     - multiply: 2.0 
+
+  # - platform: adc
+  #   pin: GPIO52
+  #   name: "GPIO52"
+  #   accuracy_decimals: 2
+  #   update_interval: 30s
+  #   attenuation: 12dB
+  #   samples: 10
+  #   filters:
+  #     - multiply: 2.0 
+  
+  # - platform: adc
+  #   pin: GPIO53
+  #   name: "GPIO53"
+  #   accuracy_decimals: 2
+  #   update_interval: 30s
+  #   attenuation: 12dB
+  #   samples: 10
+  #   filters:
+  #     - multiply: 2.0 
 
   # - platform: adc
   #   pin: GPIO23
@@ -133,10 +251,27 @@ binary_sensor:
     icon: mdi:check-network-outline
     entity_category: diagnostic
 
-  # - platform: gpio
-  #   pin: GPIO30
-  #   name: "gpio30"
+  # - platform: lvgl
+  #   id: show_snow
+  #   name: "SnowStatus"
+  #   icon: mdi:television-shimmer
+    # entity_category
 
+  # - platform: template
+  #   name: Antiburn
+  #   id: switch_antiburn
+  #   icon: mdi:television-shimmer
+  #   # entity_category: "config"
+  #   on_state:
+  #     - lvgl.pause:
+  #         show_snow: true
+    # turn_off_action:
+    #   - logger.log: "Stopping Antiburn"
+    #   - if:
+    #       condition: lvgl.is_paused
+    #       then:
+    #         - lvgl.resume:
+    #         - lvgl.widget.redraw:
 text_sensor:
   - platform: template
     id: device_last_restart
@@ -180,6 +315,11 @@ text_sensor:
         then:
           - lvgl.label.update:
               id: ip_address_label
+              text:
+                format: "%s"
+                args: [ 'id(ip_address).state.c_str()' ]
+          - lvgl.label.update:
+              id: test_label
               text:
                 format: "%s"
                 args: [ 'id(ip_address).state.c_str()' ]
