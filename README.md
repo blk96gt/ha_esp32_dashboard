@@ -1,5 +1,5 @@
 Forked from https://github.com/agillis/esphome-modular-lvgl-buttons
-
+![alt text](<Screenshot 2026-01-18 213526.png>)
 # Notes
 ## LVGL Structure
 Main LVGL

@@ -37,10 +37,10 @@ substitutions:
   screen_width: 1024
 
 esphome:
-  name: "waveshare-esp32-p4-touch-lcd-7b"
-  # name: "waveshare-sdl"
-  friendly_name: "waveshare-esp32-p4-wifi6-touch-lcd-7b"
-  comment: "Waveshare esp32-p4-wifi6-touch-lcd-7b 1024px X 600px Smart Screen"
+  # name: "waveshare-esp32-p4-touch-lcd-7b"
+  name: "waveshare-sdl"
+  # friendly_name: "waveshare-esp32-p4-wifi6-touch-lcd-7b"
+  # comment: "Waveshare esp32-p4-wifi6-touch-lcd-7b 1024px X 600px Smart Screen"
   on_boot:
     - priority: 400
       then:
