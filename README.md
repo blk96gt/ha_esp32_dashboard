@@ -163,6 +163,32 @@ Battery voltage: GPIO20
   - Drop off from 3.25 @ 10:06:32am
   - Screen died 2.54 @ 10:23am
 
+Battery percentage.  This isn't the greatest, but based on the max/min voltage from GPIO20.
+```YAML
+  - platform: template
+    name: Battery Status
+    id: bat_perc
+    update_interval: 15s
+    accuracy_decimals: 1
+    lambda: |-
+      return id(GPIO20).state;
+    icon: mdi:battery
+    filters:
+      - calibrate_linear:
+        - 3.0 -> 0.0
+        - 4.0 -> 100.0
+      - clamp:
+          min_value: 0
+          max_value: 100
+    unit_of_measurement: "%"
+    on_value:
+        then:
+          - lvgl.label.update:
+              id: bat_perc_label
+              text:
+                format: "%.0f%%"
+                args: [ 'id(bat_perc).state' ]
+```
 
 # Dev setup
 ## SDL setup 
