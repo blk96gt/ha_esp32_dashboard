@@ -4,3 +4,6 @@
 /.esphome/
 /secrets.yaml
 /waveshare-esp32-p4-wifi6-touch-lcd-7b_display_modular.pre-cleanup.yaml
+/archive/
+/fonts/
+/old/

@@ -47,6 +47,15 @@ sensor:
       # - calibrate_linear:
       #   - 3.0 -> 0.0
       #   - 4.0 -> 100.0
+  - platform: adc
+    pin: GPIO52
+    name: "GPIO52"
+    id: GPIO52
+    update_interval: 30s
+    accuracy_decimals: 3
+    attenuation: 12db
+    samples: 10
+    
   - platform: template
     name: Battery Status
     id: bat_perc

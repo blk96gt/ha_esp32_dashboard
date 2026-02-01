@@ -48,11 +48,12 @@ esphome:
 
 logger:
   level: debug
-  
+
+# Just a test
 #### UNCOMMENT BEFORE COMPILING FOR INSTALL ####
-  # logs:
-  #   lvgl: info
-  # hardware_uart: UART0
+  logs:
+    lvgl: info
+  hardware_uart: UART0
   
 # Some screens need little_endian byte order and some need big_endian
 # this sets the byte order for all the images loaded in this file and the packages as well
@@ -80,8 +81,8 @@ packages:
   # SDL has no Wi-Fi  # Enable OTA updates with a status screen
 
   ###### UNCOMMENT BEFORE INSTALL TO DEVICE ######
-  # wifi: !include esphome-modular-lvgl-buttons/common/wifi.yaml
-  # ota_screen: !include esphome-modular-lvgl-buttons/common/ota.yaml
+  wifi: !include esphome-modular-lvgl-buttons/common/wifi.yaml
+  ota_screen: !include esphome-modular-lvgl-buttons/common/ota.yaml
 
 
   # All the colors
@@ -93,8 +94,8 @@ packages:
   # Some basic sensors
 
   ######  UNCOMMENT FOR INSTALL ######
-  # sensors: !include esphome-modular-lvgl-buttons/sensors/sensors_base.yaml
-  sensors: !include esphome-modular-lvgl-buttons/sensors/sensors_base-SDL.yaml
+  sensors: !include esphome-modular-lvgl-buttons/sensors/sensors_base.yaml
+  # sensors: !include esphome-modular-lvgl-buttons/sensors/sensors_base-SDL.yaml
   # Styles + Themes
   # theme_style: !include esphome-modular-lvgl-buttons/common/theme_style.yaml
   # Use this theme for debugging
@@ -103,8 +104,8 @@ packages:
   backlight: !include esphome-modular-lvgl-buttons/common/backlight_time.yaml
   
   # Harware description file
-  # hardware: !include esphome-modular-lvgl-buttons/hardware/waveshare-esp32-p4-wifi6-touch-lcd-7b.yaml
-  hardware: !include esphome-modular-lvgl-buttons/hardware/SDL-lvgl.yaml
+  hardware: !include esphome-modular-lvgl-buttons/hardware/waveshare-esp32-p4-wifi6-touch-lcd-7b.yaml
+  # hardware: !include esphome-modular-lvgl-buttons/hardware/SDL-lvgl.yaml
   
   # Basic boot screen with ESPHome logo and device diagnostic info
   loading_screen: !include esphome-modular-lvgl-buttons/pages/loading_480px.yaml
