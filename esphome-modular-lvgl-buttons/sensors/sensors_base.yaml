@@ -48,6 +48,30 @@ sensor:
       #   - 3.0 -> 0.0
       #   - 4.0 -> 100.0
   - platform: adc
+    pin: GPIO49
+    name: "GPIO49"
+    id: GPIO49
+    update_interval: 30s
+    accuracy_decimals: 3
+    attenuation: 12db
+    samples: 10
+  - platform: adc
+    pin: GPIO50
+    name: "GPIO50"
+    id: GPIO50
+    update_interval: 30s
+    accuracy_decimals: 3
+    attenuation: 12db
+    samples: 10
+  - platform: adc
+    pin: GPIO51
+    name: "GPIO51"
+    id: GPIO51
+    update_interval: 30s
+    accuracy_decimals: 3
+    attenuation: 12db
+    samples: 10
+  - platform: adc
     pin: GPIO52
     name: "GPIO52"
     id: GPIO52
