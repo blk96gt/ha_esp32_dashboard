@@ -8,4 +8,5 @@
 /fonts/
 /old/
 /hardware/.esphome/
-/sprinkler-test.yaml
+/sprinkler-test.yaml*
+/esprinkler*
