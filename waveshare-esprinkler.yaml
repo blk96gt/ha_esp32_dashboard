@@ -1,3 +1,59 @@
+substitutions:
+  run_uom: s
+  run_duration_initial_value: '5'
+  rain_sensor_id: rain_sensor
+  rtc_id: rtc_time
+  timezone: CST
+  day_update_interval: 3min
+  hourly_update_interval: 60min
+  default_update_interval: 30s
+  # Controller setup
+  cntrlr_id: sprinkler_cntrlr
+  cntrlr_name: "Sprinkler Controller"
+  z1_name: "Zone 1"
+  z2_name: "Zone 2"
+  z3_name: "Zone 3"
+  z4_name: "Zone 4"
+  z5_name: "Zone 5"
+  z6_name: "Zone 6"
+  z7_name: "Zone 7"
+  z8_name: "Zone 8"
+  led_ready:
+    id: rgb_led
+    brightness: 100%
+    # Green
+    red: 0%
+    green: 80%
+    blue: 0%
+    effect: none
+
+  led_running:
+    id: rgb_led
+    brightness: 100%
+    # Purple 
+    red: 95%
+    green: 2%
+    blue: 100%
+    effect: none
+
+  led_standby:
+    id: rgb_led
+    brightness: 100%
+    # Orange 
+    red: 97%
+    green: 46%
+    blue: 19%
+    effect: none
+  
+  led_pause:
+    id: rgb_led
+    brightness: 100%
+    # Purple 
+    red: 95%
+    green: 2%
+    blue: 100%
+    effect: Pulse
+
 esphome:
   name: waveshare-esprinkler
   comment: "WaveShare ESP32-S3-POE-ETH-8DI-8RO device"
@@ -6,11 +62,16 @@ esphome:
   on_boot:
     then:
       - pcf85063.read_time
+      - rtttl.play:
+          rtttl: scale_up:d=32,o=5,b=150:c,e,8g
+      - light.turn_on: ${led_ready}
+          # id: rgb_led
+          
+          # brightness: 100%
+          # red: 95%
+          # green: 2%
+          # blue: 100%
 
-# esp32:
-#   board: esp32dev
-#   framework:
-#     type: esp-idf
 esp32:
   board: esp32s3box #esp32-s3-devkitc-1
   flash_size: 16MB
@@ -21,173 +82,33 @@ psram:
   mode: octal
   speed: 80MHz
 
-# Enable logging
-logger:
-
-debug:
-  update_interval: 5s
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: "thz0x33OT4pfVlgULREJgurUDENy41juibsZyTVdo+0="
-  actions:
-    # Ability to command the buzzer from Home Assistant
-    - action: rtttl_play
-      variables:
-        song_str: string
-      then:
-        - rtttl.play:
-            rtttl: !lambda 'return song_str;'
-
-ota:
-  - platform: esphome
-    password: "f063f4abfffbdd18a9dcf4d5e21d8610"
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Waveshare-Esprinkler"
-    password: "h0JC2RoXPde1"
-
-
 web_server:
   version: 3
 
-# I2C bus
-i2c:
-  sda: GPIO42
-  scl: GPIO41
-  scan: false
-  frequency: 100kHz
-  id: i2cbus
+# Enable logging
+logger:
+  level: INFO
 
-pca9554:
-  - id: 'TCA9554_hub'
-    address: 0x20
+# debug:
+#   update_interval: 5s
 
 
-
-substitutions:
-  run_duration_uom: s
-  run_duration_initial_value: '5'
-  rain_sensor_id: rain_sensor
-  rain_sensor_inverted: 'true'
-  peripherals_power_off_relay_id: relay_7
-  valve_overlap: 1s
-  pump_start_pump_delay: 1s
-  pump_stop_valve_delay: 1s
-  rtc_id: rtc_time
-  timezone: CST
-  temperature_sensor_id: temperature
-  test_var: 3
-  running_day: false
-  day_update_interval: 3min
-  hourly_update_interval: 60min
-  default_update_interval: 30s
-
-packages:   # as a list
+packages:
   # Time, IP, MAC addr, Wifi info, Temperature, etc
-  - !include esprinkler/sensors/generic_sensors.yaml
+  # - !include hardware/waveshare-8DI-8RO-C.yaml
+  # - !include sensors/generic_sensors.yaml
   # - !include controller/controller.yaml
   # - !include controller/controller_status.yaml
   # - !include schedule/schedule.yaml
-  - !include esprinkler/hardware/relay_switches.yaml
-  ##### Uncomment below if compiling from esphome builder #####
-  # - !include esprinkler/sensors/generic_sensors.yaml
-  # - !include esprinkler/controller/controller.yaml
-  # - !include esprinkler/controller/controller_status.yaml
-  # - !include esprinkler/schedule/schedule.yaml
-
-# switch:
-#   - platform: gpio
-#     id: lawn_valve_sw0
-#     pin: GPIO17
-#   - platform: gpio
-#     id: lawn_valve_sw1
-#     pin: GPIO18
-#   - platform: gpio
-#     id: lawn_valve_sw2
-#     pin: GPIO19
-#   - platform: gpio
-#     id: lawn_valve_sw3
-#     pin: GPIO20
-#   - platform: gpio
-#     id: lawn_valve_sw4
-#     pin: GPIO21
-#   - platform: gpio
-#     id: lawn_valve_sw5
-#     pin: GPIO22
-#   - platform: gpio
-#     id: lawn_valve_sw6
-#     pin: GPIO23
-#   - platform: gpio
-#     id: lawn_valve_sw7
-#     pin: GPIO25
-
-button:
-  # - platform: template
-  #   name: Pause
-  #   id: sprinkler_pause_button
-  #   #icon: "mdi:emoticon-outline"
-  #   on_press:
-  #     - sprinkler.pause: lawn_sprinkler_ctrlr
+  # - !include schedule/zone_duration.yaml
   
-  # - platform: template
-  #   name: Resume
-  #   id: sprinkler_resume_button
-  #   #icon: "mdi:emoticon-outline"
-  #   on_press:
-  #     - sprinkler.resume: lawn_sprinkler_ctrlr
+  ##### Uncomment below if compiling from esphome builder #####
+  - !include esprinkler/common/network_setup.yaml
+  - !include esprinkler/hardware/waveshare-8DI-8RO-C.yaml
+  - !include esprinkler/sensors/generic_sensors.yaml
+  - !include esprinkler/controller/controller.yaml
+  - !include esprinkler/controller/controller_status.yaml
+  - !include esprinkler/schedule/schedule.yaml
+  - !include esprinkler/schedule/zone_duration.yaml
 
-  - platform: restart
-    name: "Restart"
-    id: restart_button
-    entity_category: config
 
-  - platform: factory_reset
-    name: "Factory Reset"
-    id: reset
-    entity_category: config
-
-  - platform: safe_mode
-    name: "Safe Mode"
-    internal: false
-    entity_category: config
-
-binary_sensor:
-  - platform: status
-    name: "Status"
-
-  - platform: gpio
-    name: "Boot Button"
-    pin:
-      number: 0
-      ignore_strapping_warning: true
-      mode:
-        input: true
-      inverted: true
-    disabled_by_default: true
-    on_press:
-      then:
-        - button.press: restart_button
-
-# sensor:
-#   - platform: template
-#     id: sprinkler_valve_paused
-#     name: "Paused Zone"
-      # if (id(lawn_sprinkler_ctrlr).paused_valve().has_value()) {
-      #   // the controller is paused, get the return true valve into running_valve and print it
-      #   auto paused_valve = id(lawn_sprinkler_ctrlr).paused_valve().value();
-      #   //sprinkler_valve_paused->publish_state(paused_valve);
-      #   ESP_LOGD("Labmda", "===============>> %u",paused_valve);
-      #   return true;
-      # } else {
-      #   // the controller is NOT running
-      #   //it.print(0, 0, "Idle");
-      #   //sprinkler_valve_paused->publish_state(-1);
-      #   return false;
-      # }

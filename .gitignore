@@ -10,3 +10,4 @@
 /hardware/.esphome/
 /sprinkler-test.yaml*
 /esprinkler*
+/waveshare-esprinkler.yaml
